@@ -7,13 +7,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,6 +23,9 @@ public class StudentsController {
 
     @FXML
     private TableColumn<Student, String> studentNameColumn;
+
+    @FXML
+    private TableColumn<Student, Void> viewStudentsColumn;
 
     private Student selectedStudent;  // Instance variable to hold the selected student
 
@@ -45,14 +46,14 @@ public class StudentsController {
         ObservableList<Student> studentData = FXCollections.observableArrayList(students);
         studentTableView.setItems(studentData);
 
-        // Add listener to handle row selection
-        studentTableView.setOnMouseClicked(this::handleStudentSelection);
-
         // Arama butonuna işlem bağla
         searchButton.setOnAction(event -> searchStudent());
 
         // Reset butonuna işlem bağla
         resetButton.setOnAction(event -> resetTable());
+
+        // View Students butonunu ekle
+        addViewStudentsButton();
     }
 
     private ArrayList<Student> fetchStudentsFromDatabase() {
@@ -68,37 +69,57 @@ public class StudentsController {
         return students;
     }
 
-    // Event handler for when a student is clicked
-    private void handleStudentSelection(MouseEvent event) {
-        // Get the selected student from the table
-        selectedStudent = studentTableView.getSelectionModel().getSelectedItem();
-        selectedStudent.getCourses().addAll(CourseDataAccessObject.getCoursesBasedOnStudent(selectedStudent.getName()));
-        System.out.println(selectedStudent.getCourses().get(1));
-        StudentManagementController.student = selectedStudent;
+    private void addViewStudentsButton() {
+        Callback<TableColumn<Student, Void>, TableCell<Student, Void>> cellFactory = new Callback<>() {
+            @Override
+            public TableCell<Student, Void> call(final TableColumn<Student, Void> param) {
+                return new TableCell<>() {
+                    private final Button btn = new Button("View Student");
 
-        // If a student is selected, open the StudentManagement.fxml
-        if (selectedStudent != null) {
-            try {
-                // Load the StudentManagement.fxml file
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("StudentManagement.fxml"));
-                Parent root = loader.load();
+                    {
+                        btn.setOnAction(event -> {
+                            Student student = getTableView().getItems().get(getIndex());
+                            // HandleStudentSelection'daki işlemleri gerçekleştir
+                            student.getCourses().addAll(CourseDataAccessObject.getCoursesBasedOnStudent(student.getName()));
+                            StudentManagementController.student = student;
 
-                // Get the controller of the StudentManagement.fxml
-                StudentManagementController controller = loader.getController();
-                controller.setStudent(selectedStudent); // Pass the selected student to the controller
+                            try {
+                                // Load the StudentManagement.fxml file
+                                FXMLLoader loader = new FXMLLoader(getClass().getResource("StudentManagement.fxml"));
+                                Parent root = loader.load();
 
-                // Create a new stage (window)
-                Stage stage = new Stage();
-                stage.setTitle("Student Management - " + selectedStudent.getName()); // Set title to include student name
-                stage.initModality(Modality.WINDOW_MODAL); // Optional: makes it modal, so the user cannot interact with the main window
-                stage.setScene(new Scene(root));
+                                // Get the controller of the StudentManagement.fxml
+                                StudentManagementController controller = loader.getController();
+                                controller.setStudent(student); // Pass the selected student to the controller
 
-                // Show the new stage
-                stage.show();
-            } catch (IOException e) {
-                e.printStackTrace();
+                                // Create a new stage (window)
+                                Stage stage = new Stage();
+                                stage.setTitle("Student Management - " + student.getName());
+                                stage.initModality(Modality.WINDOW_MODAL);
+                                stage.setScene(new Scene(root));
+
+                                // Show the new stage
+                                stage.show();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        });
+                    }
+
+                    @Override
+                    protected void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(btn);
+                        }
+                    }
+                };
             }
-        }
+        };
+
+        viewStudentsColumn.setCellFactory(cellFactory);
     }
 
     private void searchStudent() {

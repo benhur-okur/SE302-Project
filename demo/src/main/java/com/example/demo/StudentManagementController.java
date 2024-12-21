@@ -264,31 +264,44 @@ public class StudentManagementController {
 
         // Veritabanından dersleri al
         ArrayList<VBox> vBoxes = AssignCourseClassroomDB.getAssign(CourseDataAccessObject.getCoursesBasedOnStudent(student.getName()));
-        //O Classroom'un course'larını aldık!
 
-        for (VBox vbox : vBoxes) {
+        for (VBox originalVBox : vBoxes) {
             Course currentCourse;
-            Label courseIDLabel = (Label) vbox.getChildren().get(0);
+            Label courseIDLabel = (Label) originalVBox.getChildren().get(0);
             String courseID = courseIDLabel.getText();
             currentCourse = CourseDataAccessObject.getCourseByCourseID(courseID);
 
-
+            int durationOfCurrentCourse = currentCourse.getDuration();
             int col = getDayColumnIndex(currentCourse.getCourseDay());
-            int row = getTimeRowIndex(currentCourse.getStartTime().toString());
+            int startRow = getTimeRowIndex(currentCourse.getStartTime().toString());
 
-            /*
-            Label courseLabel = new Label(course.getCourseID());
-            Label classroomLabel = new Label(course.getAssignedClassroom().getClassroomName());
-            VBox vbox = new VBox();
-            vbox.setSpacing(10); // Etiketler arasında 10 piksel boşluk
-            vbox.getChildren().addAll(courseLabel, classroomLabel);
+            for (int i = 0; i < durationOfCurrentCourse; i++) {
+                // Orijinal VBox'ı kopyalayarak yeni bir VBox oluştur
+                VBox vboxCopy = createVBoxCopy(originalVBox);
 
-             */
-            scheduleGrid.add(vbox, col, row);
-
+                // Yeni VBox'ı grid'e ekle
+                scheduleGrid.add(vboxCopy, col, startRow + i);
+            }
         }
-
     }
+
+    /**
+     * Mevcut bir VBox'ın içeriğini kopyalar ve yeni bir VBox oluşturur.
+     */
+    private VBox createVBoxCopy(VBox originalVBox) {
+        VBox vboxCopy = new VBox();
+        vboxCopy.setSpacing(originalVBox.getSpacing());
+        for (Node child : originalVBox.getChildren()) {
+            if (child instanceof Label) {
+                Label originalLabel = (Label) child;
+                Label labelCopy = new Label(originalLabel.getText());
+                labelCopy.setStyle(originalLabel.getStyle());
+                vboxCopy.getChildren().add(labelCopy);
+            }
+        }
+        return vboxCopy;
+    }
+
 
     // Haftanın günleri için sütun indekslerini döndür
     private static int getDayColumnIndex(String day) {
