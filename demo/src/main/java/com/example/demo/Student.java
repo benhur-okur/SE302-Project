@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import java.sql.SQLException;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -46,17 +47,29 @@ public class Student extends Person{
     }
 
 
-    public boolean isAvailable(Course course){
-        for(Course c : getCourses()) {
-            // Check if the course day matches
-            if(c.getCourseDay() == course.getCourseDay()) {
-                // If the course times overlap, it's not available
-                if(!(c.getEndTime().isBefore(course.getStartTime()) || c.getStartTime().isAfter(course.getEndTime()))) {
-                    return false; // There's a conflict
+    public boolean isAvailable(Course newCourse) {
+        // Eğer öğrencinin katıldığı dersler listesi boşsa, öğrenci uygundur.
+        if (this.getCourses() == null || this.getCourses().isEmpty()) {
+            return true;
+        }
+
+        for (Course existingCourse : this.getCourses()) {
+            LocalTime existingStartTime = existingCourse.getStartTime();
+            LocalTime existingEndTime = existingCourse.getEndTime();
+            String existingCourseDay = existingCourse.getCourseDay();
+            String newCourseDay = newCourse.getCourseDay();
+            LocalTime newStartTime = newCourse.getStartTime();
+            LocalTime newEndTime = newCourse.getEndTime();
+
+            // Aynı gün olup olmadığını kontrol et
+            if (existingCourseDay.equals(newCourseDay)) {
+                // Zamanların çakışıp çakışmadığını kontrol et
+                if (newStartTime.isBefore(existingEndTime) && newEndTime.isAfter(existingStartTime)) {
+                    return false; // Çakışma var, öğrenci bu derse katılamaz
                 }
             }
         }
-        return true; // No conflict found
+        return true; // Çakışma yok, öğrenci derse katılabilir
     }
 
 }
