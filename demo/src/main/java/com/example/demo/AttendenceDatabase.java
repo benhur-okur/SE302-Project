@@ -37,7 +37,7 @@ public class AttendenceDatabase {
         String sql = """
             CREATE TABLE IF NOT EXISTS Students (
                 student_id INTEGER PRIMARY KEY AUTOINCREMENT,
-                student_name TEXT NOT NULL,
+                student_name TEXT,
                 UNIQUE (student_name)                               \s
                          );
         \s""";
@@ -53,8 +53,8 @@ public class AttendenceDatabase {
         String sql2 = """
             CREATE TABLE IF NOT EXISTS Attendance (
                 attendance_id INTEGER PRIMARY KEY AUTOINCREMENT,
-                student_id INTEGER NOT NULL,
-                student_name TEXT NOT NULL,
+                student_id INTEGER,
+                student_name TEXT,
                 course_name TEXT NOT NULL,
                 absence_count INTEGER DEFAULT 0,
                 FOREIGN KEY (student_name) REFERENCES Students(student_name),
@@ -142,6 +142,22 @@ public class AttendenceDatabase {
                     }
                 }
             }
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Insertion error: " + e.getMessage(), e);
+        }
+    }
+    public static void addAttendancesForNewCourse(Course newCourse) {
+
+        //Attendance ekleme sorgusu
+        String insertQuery = "INSERT INTO Attendance(course_name, absence_count) VALUES (?, ?)";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement insertStmt = conn.prepareStatement(insertQuery)) {
+
+                 insertStmt.setString(1, newCourse.getCourseID());
+                 insertStmt.setInt(2, 0); // Başlangıç devamsızlık sayısı
+                 insertStmt.executeUpdate();
 
         } catch (SQLException e) {
             throw new RuntimeException("Insertion error: " + e.getMessage(), e);

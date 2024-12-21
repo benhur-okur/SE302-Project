@@ -31,6 +31,8 @@ public class Admin {
                         student.getCourses().add(course);
                         course.getEnrolledStudentsList().add(student);
                         CourseDataAccessObject.updateForAddingStudentToCourse(course, student); // buraya ekledimmm <3
+                        AttendenceDatabase.
+
                         //TODO: Yapıldı kontrol edilecek --> doa
                     } else {
                         System.out.println("This student have another course at that time!");

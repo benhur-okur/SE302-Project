@@ -13,6 +13,7 @@ public class CourseDataAccessObject {
 
     public static void createTable() {
 
+
 /*
         String sql2 = "DROP TABLE IF EXISTS Course";
         try (Connection conn = DatabaseConnection.getConnection();
@@ -24,6 +25,10 @@ public class CourseDataAccessObject {
         }
 
  */
+
+
+
+
         
 
         String sql = """
@@ -88,14 +93,15 @@ public class CourseDataAccessObject {
 
     public static void addSingleCourse(Course course){
 
-        String sql = "INSERT OR IGNORE INTO Course(Course, TimeToStart, DurationInLectureHours, Lecturer) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO Course(Course, TimeToStart, DurationInLectureHours, Lecturer) VALUES (?, ?, ?, ?)";
         try(Connection conn = DatabaseConnection.getConnection();
             PreparedStatement pstmt = conn.prepareStatement(sql)){
                 pstmt.setString(1, course.getCourseID());
                 pstmt.setString(2, course.getTimeToStart());
                 pstmt.setInt(3, course.getDuration());
                 pstmt.setString(4, course.getLecturerName());
-                pstmt.executeUpdate();
+
+            pstmt.executeUpdate();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

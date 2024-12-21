@@ -114,7 +114,7 @@ public class CreateCourseController {
         System.out.println("Classroom: " + newCourse.getClassroomName());
 
         CourseDataAccessObject.addSingleCourse(newCourse);
-
+        AttendenceDatabase.addAttendancesForNewCourse(newCourse);
         
 
         // Pencereyi kapat
