@@ -26,15 +26,15 @@ public class Admin {
         if(course.getAssignedClassroom() != null){
             Classroom cls = course.getAssignedClassroom();
             if(!student.getCourses().contains(course)) {
-                System.out.println("İÇERİYOR MU KARDESİM BU DERSİ");
                 if(cls.getCapacity() > course.getEnrolledStudentsList().size()) {
                     if(student.isAvailable(course)){
                         student.getCourses().add(course);
                         course.getEnrolledStudentsList().add(student);
                         CourseDataAccessObject.updateForAddingStudentToCourse(course, student); // buraya ekledimmm <3
                         //TODO: Yapıldı kontrol edilecek --> doa
+                    } else {
+                        System.out.println("This student have another course at that time!");
                     }
-                    System.out.println("ÇAKIŞIYOOOOORRRRRRRRR");
 
                 } else {
                     System.out.println("There is no space in the classroom.");

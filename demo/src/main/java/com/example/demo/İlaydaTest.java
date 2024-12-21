@@ -20,8 +20,8 @@ public class İlaydaTest {
             course.assignClassroom(classroomsList);
         }
         System.out.println("*********");
-        for(Course crs : courseList) {
-            System.out.println(crs + " " +  crs.getCourseID() + " " + crs.getAssignedClassroom().getClassroomName());
+        for(Course crs : CourseDataAccessObject.getCoursesBasedOnStudent("ESER POYRAZ")) {
+
         }
 
     }
