@@ -77,7 +77,7 @@ public class AttendanceManagementController {
             actionColumn.setCellFactory(cellFactory);
         }
         @FXML
-        public void searchBtnAction () {
+        public void searchBtnAction () { //TODO HATA VAR
             String searchText = searchBar.getText().toLowerCase();
             ObservableList<AttendanceStudents> filteredData = FXCollections.observableArrayList();
 

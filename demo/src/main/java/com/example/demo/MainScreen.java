@@ -28,14 +28,7 @@ public class MainScreen extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        courseList = CourseDataAccessObject.getCourses();
-        ArrayList<Classroom> classroomsList = ClassroomDataAccessObject.getClassrooms();
-        for (Course course : courseList) {
-            //System.out.println(course.getCourseID() + " " + course.getEnrolledStudentsList().size());
-            System.out.println(course + " " + course.getCourseID() + " " + AttendenceDatabase.studentsOfSpecificCourse(course).size());
-            course.assignClassroom(classroomsList);
-            System.out.println(course.getAssignedClassroom().getClassroomName());
-        }
+        makeAssign();
 
         //TODO
         ArrayList<Course> studentCourses = CourseDataAccessObject.getCoursesBasedOnStudent("DOĞA GÜNEŞ");
@@ -61,5 +54,16 @@ public class MainScreen extends Application {
     }
     public static HostServices getHostServicesInstance() {
         return hostServices; // Controller sınıfı buradan erişebilir
+    }
+
+    public static void makeAssign() {
+        courseList = CourseDataAccessObject.getCourses();
+        ArrayList<Classroom> classroomsList = ClassroomDataAccessObject.getClassrooms();
+        for (Course course : courseList) {
+            //System.out.println(course.getCourseID() + " " + course.getEnrolledStudentsList().size());
+            System.out.println(course + " " + course.getCourseID() + " " + AttendenceDatabase.studentsOfSpecificCourse(course).size());
+            course.assignClassroom(classroomsList);
+            System.out.println(course.getAssignedClassroom().getClassroomName());
+        }
     }
 }

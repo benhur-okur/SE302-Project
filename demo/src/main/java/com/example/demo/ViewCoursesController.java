@@ -54,6 +54,7 @@ public class ViewCoursesController {
     private ObservableList<Course> allCourses;
 
     private Course selectedCourse;
+    public CreateCourseController createCourseController;
 
     public void initialize() {
 
@@ -103,6 +104,10 @@ public class ViewCoursesController {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CreateCourse.fxml"));
         Parent root = fxmlLoader.load();
 
+        createCourseController = fxmlLoader.getController();
+        createCourseController.setMainController(this);
+
+
         //yeni stage oluştur ve .fxml'i göster
         Stage stage = new Stage();
         stage.setMinWidth(400);
@@ -117,6 +122,7 @@ public class ViewCoursesController {
         allCourses = AssignCourseClassroomDB.getCoursesWithAssignedClassrooms(hypotethicalCourses);
         //allCourses = CourseDataAccessObject.getCoursesWithoutStudents();
         tableView.setItems(allCourses);
+        MainScreen.makeAssign();
         ArrayList<Course> arrayList = new ArrayList<>(MainScreen.courseList);
         ObservableList<Course> courseObservableList = FXCollections.observableList(arrayList);
         tableView.setItems(courseObservableList);

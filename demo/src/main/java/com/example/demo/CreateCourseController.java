@@ -24,6 +24,7 @@ public class CreateCourseController {
     private ListView<String> classroomListView;
     @FXML
     private ListView<Integer> durationListView;
+    ViewCoursesController viewCoursesController;
 
     private ObservableList<String> availableLecturers;
     private ObservableList<String> availableStartTimes;
@@ -114,10 +115,13 @@ public class CreateCourseController {
         System.out.println("Classroom: " + newCourse.getClassroomName());
 
         CourseDataAccessObject.addSingleCourse(newCourse);
-        AttendenceDatabase.addAttendancesForNewCourse(newCourse);
+        //AttendenceDatabase.addAttendancesForNewCourse(newCourse);
+        AssignCourseClassroomDB.initializeAssigning(newCourse,selectedClassroom );
         
 
         // Pencereyi kapat
+        viewCoursesController.setTableView();
+
         Stage stage = (Stage) courseNameField.getScene().getWindow();
         stage.close();
     }
@@ -126,5 +130,9 @@ public class CreateCourseController {
     private void handleCancel() {
         Stage stage = (Stage) courseNameField.getScene().getWindow();
         stage.close();
+    }
+
+    public void setMainController(ViewCoursesController viewCoursesController) {
+        this.viewCoursesController = viewCoursesController;
     }
 }

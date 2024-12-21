@@ -323,6 +323,49 @@ public class AttendenceDatabase {
             throw e;
         }
     }
+
+    public static int getStudentId(Student student) {
+        String selectQuery = "SELECT student_id FROM Students WHERE student_name = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(selectQuery)) {
+            pstmt.setString(1, student.getName());
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("student_id"); // Öğrencinin ID'sini döndür
+                } else {
+                    throw new RuntimeException("Student not found: " + student.getName());
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving student ID: " + student.getName(), e);
+        }
+    }
+
+    public static void addAttendanceSingleRow(Course course, Student student) {
+        String insertQuery = "INSERT INTO Attendance(student_id, student_name, course_name, absence_count) VALUES (?, ?, ?, ?)";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(insertQuery)) {
+
+            // Öğrencinin ID'sini al
+            int studentId = getStudentId(student);
+
+            // PreparedStatement'a parametreleri ekle
+            pstmt.setInt(1, studentId); // student_id
+            pstmt.setString(2, student.getName()); // student_name
+            pstmt.setString(3, course.getCourseID()); // course_name
+            pstmt.setInt(4, 0); // absence_count, 0'dan başlıyor
+
+            // Sorguyu çalıştır
+            pstmt.executeUpdate();
+
+            System.out.println("Attendance row added successfully for student: " + student.getName());
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error adding attendance row for student: " + student.getName(), e);
+        }
+    }
+
 }
 
 
