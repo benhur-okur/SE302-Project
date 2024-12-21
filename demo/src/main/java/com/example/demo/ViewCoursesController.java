@@ -35,6 +35,10 @@ public class ViewCoursesController {
     @FXML
     private TableColumn<Course, String> lecturerName;
     @FXML
+    private TableColumn<String, String> assignedClassroom;
+    @FXML
+    private TableColumn<Course, String> changeClassroom;
+    @FXML
     private TableColumn<Course, Void> viewStudentsColumn;
     @FXML
     private TextField searchField;
@@ -42,6 +46,8 @@ public class ViewCoursesController {
     private Button searchButton;
     @FXML
     private Button resetButton;
+    @FXML
+    private Button createCourseButton;
 
     public static Student selectedStudent;
 
@@ -50,16 +56,17 @@ public class ViewCoursesController {
     private Course selectedCourse;
 
     public void initialize() {
+
+
         // Sütunları yapılandır
         courseID.setCellValueFactory(new PropertyValueFactory<>("courseID"));
         timeToStart.setCellValueFactory(new PropertyValueFactory<>("timeToStart"));
         duration.setCellValueFactory(new PropertyValueFactory<>("duration"));
         lecturerName.setCellValueFactory(new PropertyValueFactory<>("lecturerName"));
+        assignedClassroom.setCellValueFactory(new PropertyValueFactory<>("classroomName"));
 
 
-        ObservableList<Course> hypotethicalCourses = CourseDataAccessObject.getCoursesWithoutStudents();
-        allCourses = AssignCourseClassroomDB.getCoursesWithAssignedClassrooms(hypotethicalCourses);
-        allCourses = CourseDataAccessObject.getCoursesWithoutStudents();
+
         /*
         for(Course crs : allCourses) {
             System.out.println(crs.getAssignedClassroom());
@@ -67,7 +74,15 @@ public class ViewCoursesController {
 
          */
 
+
+        setTableView();
+        /*
+        ObservableList<Course> hypotethicalCourses = CourseDataAccessObject.getCoursesWithoutStudents();
+        allCourses = AssignCourseClassroomDB.getCoursesWithAssignedClassrooms(hypotethicalCourses);
+        allCourses = CourseDataAccessObject.getCoursesWithoutStudents();
         tableView.setItems(allCourses);
+
+         */
 
         // "View Students" sütununu ekle
         addViewStudentsButton();
@@ -82,6 +97,32 @@ public class ViewCoursesController {
         tableView.setOnMouseClicked(this::handleCourseSelection);  // Course selection handler
 
     }
+    public void setTableView () {
+        ObservableList<Course> hypotethicalCourses = CourseDataAccessObject.getCoursesWithoutStudents();
+        allCourses = AssignCourseClassroomDB.getCoursesWithAssignedClassrooms(hypotethicalCourses);
+        //allCourses = CourseDataAccessObject.getCoursesWithoutStudents();
+        tableView.setItems(allCourses);
+        ArrayList<Course> arrayList = new ArrayList<>(MainScreen.courseList);
+        ObservableList<Course> courseObservableList = FXCollections.observableList(arrayList);
+        tableView.setItems(courseObservableList);
+
+    }
+    /*
+    public void setTableViewFiltered (ObservableList<Course> filteredCourses) {
+
+        ObservableList<Course> hypotethicalCourses = CourseDataAccessObject.getCoursesWithoutStudents();
+        allCourses = AssignCourseClassroomDB.getCoursesWithAssignedClassrooms(hypotethicalCourses);
+        allCourses = CourseDataAccessObject.getCoursesWithoutStudents();
+
+
+        tableView.setItems(filteredCourses);
+        ArrayList<Course> arrayList = new ArrayList<>(MainScreen.courseList);
+        ObservableList<Course> courseObservableList = FXCollections.observableList(arrayList);
+        tableView.setItems(courseObservableList);
+
+    }
+
+     */
 
     // Event handler for when a course is clicked
     @FXML
@@ -100,7 +141,7 @@ public class ViewCoursesController {
 
                 studentManagementController.handleAddToCourse(selectedCourse); //TODO!!
                 System.out.println(selectedCourse.getStudentNames());
-                CourseDataAccessObject.updateForAddingStudentToCourse(selectedCourse, selectedStudent);
+                //CourseDataAccessObject.updateForAddingStudentToCourse(selectedCourse, selectedStudent);
 
                 Stage stage = (Stage) tableView.getScene().getWindow();
                 stage.close();
@@ -114,7 +155,7 @@ public class ViewCoursesController {
     private void searchCourse() {
         String searchQuery = searchField.getText();
         if (searchQuery == null || searchQuery.trim().isEmpty()) {
-            tableView.setItems(allCourses); // Eğer arama kutusu boşsa tüm kursları göster
+            setTableView(); // Eğer arama kutusu boşsa tüm kursları göster
         } else {
             ObservableList<Course> filteredCourses = FXCollections.observableArrayList();
             for (Course course : allCourses) {
@@ -125,12 +166,14 @@ public class ViewCoursesController {
             tableView.setItems(filteredCourses); // Filtrelenmiş kursları göster
         }
         addViewStudentsButton(); // "View Students" butonlarını yeniden ekle
+
     }
 
     private void resetTable() {
         searchField.clear(); // Arama kutusunu temizle
         tableView.setItems(allCourses); // Tüm kursları tekrar yükle
         addViewStudentsButton(); // "View Students" butonlarını tekrar ekle
+        setTableView();
     }
 
 
@@ -185,10 +228,12 @@ public class ViewCoursesController {
         scrollPane.setFitToWidth(true);
         scrollPane.setFitToHeight(true);
 
+        setTableView();
         Stage studentsStage = new Stage();
         studentsStage.setTitle("Students in Course: " + course.getCourseID());
         Scene scene = new Scene(scrollPane, 400, 300);
         studentsStage.setScene(scene);
         studentsStage.show();
     }
+
 }

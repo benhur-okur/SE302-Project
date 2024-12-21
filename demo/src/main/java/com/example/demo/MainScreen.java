@@ -19,6 +19,7 @@ import java.util.ArrayList;
 public class MainScreen extends Application {
     private static HostServices hostServices;
 
+    static ArrayList<Course> courseList = new ArrayList<>();
 
     public static void main(String[] args) {
         launch(args);
@@ -27,14 +28,16 @@ public class MainScreen extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        ArrayList<Course> courseList = CourseDataAccessObject.getCourses();
+        courseList = CourseDataAccessObject.getCourses();
         ArrayList<Classroom> classroomsList = ClassroomDataAccessObject.getClassrooms();
         for (Course course : courseList) {
             //System.out.println(course.getCourseID() + " " + course.getEnrolledStudentsList().size());
             System.out.println(course + " " + course.getCourseID() + " " + AttendenceDatabase.studentsOfSpecificCourse(course).size());
             course.assignClassroom(classroomsList);
+            System.out.println(course.getAssignedClassroom().getClassroomName());
         }
 
+        //TODO
         ArrayList<Course> studentCourses = CourseDataAccessObject.getCoursesBasedOnStudent("DOĞA GÜNEŞ");
         /*
         for(Course crs : studentCourses) {

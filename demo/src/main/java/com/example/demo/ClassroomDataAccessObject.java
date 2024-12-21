@@ -73,7 +73,6 @@ public class ClassroomDataAccessObject {
         return  allClassroom;
     }
 
-
     public static int getCapacityWhereClassroomIs(String classroomName) {
         int capacity = 0;
         String sql = "SELECT Capacity FROM Classroom WHERE Classroom = ?";
