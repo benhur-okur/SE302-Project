@@ -24,6 +24,5 @@
             <TableColumn fx:id="viewStudentsColumn" prefWidth="180.79998779296875" text="View Student Detail" />
         </columns>
       </TableView>
-      <Label alignment="CENTER" prefHeight="26.0" prefWidth="787.0" text="Students List" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
    </children>
 </AnchorPane>
