@@ -29,12 +29,12 @@ public class Admin {
             Classroom cls = course.getAssignedClassroom();
             if(!student.getCourses().contains(course)) {
                 if(cls.getCapacity() > course.getEnrolledStudentsList().size()) {
-                    //if(student.isAvailable(course)){
+                    if(student.isAvailable(course)){
                         student.getCourses().add(course);
                         course.getEnrolledStudentsList().add(student);
                         CourseDataAccessObject.updateForAddingStudentToCourse(course, student); // buraya ekledimmm <3
                         //TODO: Yapıldı kontrol edilecek --> doa
-                    //}
+                    }
 
                 } else {
                     System.out.println("There is no space in the classroom.");

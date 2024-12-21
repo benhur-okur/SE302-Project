@@ -176,6 +176,61 @@ public class AssignCourseClassroomDB {
 
         return courseList;
     }
+    /*
+    public static ObservableList<Course> getClassroomNamesByCourse(ArrayList<Course> courseList) {
+        ArrayList<Classroom> classrooms = new ArrayList<>();
+        ArrayList<String> classroomNames = new ArrayList<>();
+
+
+        // SQL sorgusu
+        String query = "SELECT classroom_name FROM Assign WHERE course_id = ?";
+
+        for (Course course : courseList)
+        {           try (Connection conn = DatabaseConnection.getConnection();
+                 PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+
+                // Parametreyi ayarla
+                preparedStatement.setString(1, course.getCourseID());
+
+                // Sorguyu çalıştır ve sonuçları işle
+                ResultSet resultSet = preparedStatement.executeQuery();
+                classroomNames.add(resultSet.getString(1));
+
+
+            } catch (SQLException e) {
+                System.out.println("An error occurred while fetching courses: " + e.getMessage());
+            }
+        }
+
+        String query2 = "SELECT * FROM Classroom WHERE Classroom = ?";
+
+
+        int i = 0;
+        for (String classroomName : classroomNames) {
+            try (Connection conn = DatabaseConnection.getConnection();
+                 PreparedStatement preparedStatement = conn.prepareStatement(query2)) {
+
+                // Parametreyi ayarla
+                preparedStatement.setString(1, classroomName);
+
+                // Sorguyu çalıştır ve sonuçları işle
+                ResultSet resultSet = preparedStatement.executeQuery();
+                Classroom newClassroom = new Classroom(resultSet.getString(1), resultSet.getInt(2));
+                classrooms.add(newClassroom);
+
+                courseList.get(i).setAssignedClassroom(newClassroom);
+
+                i++;
+            } catch (SQLException e) {
+                System.out.println("An error occurred while fetching courses: " + e.getMessage());
+            }
+        }
+
+        ObservableList<Course> observableList = FXCollections.observableArrayList(courseList);
+        return observableList;
+    }
+
+     */
 
 
 }
