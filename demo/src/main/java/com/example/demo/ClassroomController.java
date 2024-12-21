@@ -46,18 +46,20 @@ public class ClassroomController {
 
         // Veritabanından dersleri al
         ArrayList<Course> courses = AssignCourseClassroomDB.getCourseNamesByClassroom(currentClassroom.getClassroomName());
-        //O Classroom'un course'larını aldık!
 
         for (Course course : courses) {
-            int col = getDayColumnIndex(course.getCourseDay());
-            int row = getTimeRowIndex(course.getStartTime().toString());
+            int durationOfCurrentCourse = course.getDuration(); // Ders süresi
+            int col = getDayColumnIndex(course.getCourseDay()); // Gün sütunu
+            int startRow = getTimeRowIndex(course.getStartTime().toString()); // Başlangıç saati satırı
 
-            Label courseLabel = new Label(course.getCourseID());
-            scheduleGrid.add(courseLabel, col, row);
-
+            for (int i = 0; i < durationOfCurrentCourse; i++) {
+                // Her bir zaman dilimi için etiket oluştur
+                Label courseLabel = new Label(course.getCourseID());
+                scheduleGrid.add(courseLabel, col, startRow + i); // Satırı her iterasyonda artırarak ekleme yap
+            }
         }
-        
     }
+
 
     // Haftanın günleri için sütun indekslerini döndür
     private int getDayColumnIndex(String day) {
