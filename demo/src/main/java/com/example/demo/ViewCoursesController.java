@@ -43,6 +43,8 @@ public class ViewCoursesController {
     @FXML
     private Button resetButton;
 
+    public static Student selectedStudent;
+
     private ObservableList<Course> allCourses;
 
     private Course selectedCourse;
@@ -87,6 +89,7 @@ public class ViewCoursesController {
 
                 studentManagementController.handleAddToCourse(selectedCourse); //TODO!!
                 System.out.println(selectedCourse.getStudentNames());
+                CourseDataAccessObject.updateForAddingStudentToCourse(selectedCourse, selectedStudent);
 
                 Stage stage = (Stage) tableView.getScene().getWindow();
                 stage.close();
@@ -94,6 +97,7 @@ public class ViewCoursesController {
                 e.printStackTrace();  // Handle any exceptions that might occur during the loading of the FXML
             }
         }
+
     }
 
     private void searchCourse() {
