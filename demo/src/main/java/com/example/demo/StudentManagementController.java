@@ -114,7 +114,7 @@ public class StudentManagementController {
         // Create a new stage and show the FXML
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle("Select a Course Please!");
+        stage.setTitle("Select a Course to Add Please!");
         stage.setScene(new Scene(root));
         stage.showAndWait();
     }
@@ -137,7 +137,7 @@ public class StudentManagementController {
         // Create a new stage and show the FXML
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle("Select two Courses Please!");
+        stage.setTitle("Select a Enrolled Course and a Desired Course to Execute the Transfer Please!");
         stage.setScene(new Scene(root));
         stage.showAndWait();
     }
@@ -176,7 +176,7 @@ public class StudentManagementController {
         // Create and show the new stage with the CourseTableView
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle("Select a Course to Remove");
+        stage.setTitle("Select a Course to Remove Please!");
         stage.setScene(new Scene(root));
         stage.showAndWait();
 
@@ -208,7 +208,7 @@ public class StudentManagementController {
             loadCourses();
             System.out.println("Student made the transfer!");
         } else {
-            System.out.println("Please courses and ensure a student is selected.");
+            System.out.println("Please select courses and ensure a student is selected.");
         }
     }
 

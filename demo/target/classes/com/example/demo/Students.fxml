@@ -2,21 +2,38 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 
 <AnchorPane prefHeight="570.0" prefWidth="787.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.StudentsController">
    <children>
-      <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="26.0" prefWidth="787.0" text="Student List" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-      <TableView fx:id="studentTableView" layoutY="60.0" prefHeight="510.0" prefWidth="787.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="59.60000000000002">
+      <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="25.0" prefHeight="41.0" prefWidth="787.0" spacing="10" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <Label text="Search:" />
+            <TextField fx:id="searchField" promptText="Enter course ID" />
+            <Button fx:id="searchButton" text="Search" />
+            <Button fx:id="resetButton" text="Reset" />
+         </children>
+      </HBox>
+      <TableView fx:id="studentTableView" layoutY="63.2" prefHeight="507.0" prefWidth="787.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="63.0">
         <columns>
           <TableColumn fx:id="studentNameColumn" prefWidth="152.79999387264252" text="Student Names" />
         </columns>
       </TableView>
-      <Button fx:id="searchButton" layoutX="240.0" layoutY="26.0" mnemonicParsing="false" text="Search" />
-      <Button fx:id="resetButton" layoutX="302.0" layoutY="26.0" mnemonicParsing="false" text="Reset" />
-      <TextField fx:id="searchField" layoutX="4.0" layoutY="26.0" prefHeight="26.0" prefWidth="221.0" />
+      <MenuBar layoutX="4.0" prefHeight="0.0" prefWidth="787.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Select a Student to See Details!" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
    </children>
 </AnchorPane>
