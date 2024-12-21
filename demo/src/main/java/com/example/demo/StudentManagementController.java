@@ -6,6 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -48,6 +49,9 @@ public class StudentManagementController {
     private Button transferStudentButton;
 
     @FXML
+    private Button refreshButton;
+
+    @FXML
     public void initialize() {
         // Initialize the TableColumn to display course IDs
         CoursesColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCourseID()));
@@ -69,6 +73,27 @@ public class StudentManagementController {
         removeStudentButton.setOnAction(event -> handleRemoveStudentFromCourse());
 
         transferStudentButton.setOnAction(event -> OpenViewCoursesTransfer());
+
+        refreshButton.setOnAction(event -> refreshView());
+
+    }
+
+    @FXML
+    private void refreshView() {
+        if (student != null) {
+            loadCourses();
+
+            // Sadece ders içeriklerini temizle (VBox'ları)
+            ObservableList<Node> children = scheduleGrid.getChildren();
+            children.removeIf(node -> node instanceof VBox);
+
+            // Sadece dersleri tekrar yerleştir
+            populateCourses();
+
+            System.out.println("View refreshed successfully!");
+        } else {
+            System.out.println("No student selected, nothing to refresh.");
+        }
 
     }
 

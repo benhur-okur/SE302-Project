@@ -55,6 +55,11 @@ public class Admin {
             course.getEnrolledStudentsList().remove(student);
 
             CourseDataAccessObject.updateForRemovingStudent(course, student); // buraya ekledimm
+            try {
+                AttendenceDatabase.deleteAttendanceRecord(student, course);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
             // TODO : update işlemini yaptım fakat denenmedi !!! <3 doa
         } else {
             System.out.println("Transfer failed: The student is not enrolled in this course.");
@@ -74,6 +79,11 @@ public class Admin {
                     transferCourse.getEnrolledStudentsList().add(student);
 
                     CourseDataAccessObject.updateForTransferringStudent(enrolledCourse, transferCourse, student); // buraya ekledimm
+                    try {
+                        AttendenceDatabase.deleteAttendanceRecord(student, enrolledCourse);
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
                     //TODO: bu da tamam metodu doğru yerde mi çağırıyorum bilemedim ve yine denemedim :((
                 //}
 
@@ -140,16 +150,5 @@ public class Admin {
            viewStudentAbsenteeism(student,course);
         }
         //TODO SQL spesifik öğrenci için devamsılık göstercek - BU VE ALTTAKİ METHODLAR İÇİN SQL UPDATE YAPMADIM NO USAGE GÖSTERİYO ÇÜNKÜ KULLANILICAKSA BBUNLAR LÜTFEN HABER EDİN YAPARIM
-    }
-
-
-    // Öğrencinin tüm derslerdeki devamsızlıklarını görüntüleme
-    public void viewAllAbsenteeismForStudent(Student student) throws SQLException {
-        System.out.println("Absenteeism details for student: " + student.getName());
-        for (Course course : student.getCourses()) {
-            int absenteeismCount = student.getAbsenceCountForCourse(course);
-            System.out.println("In course " + course.getCourseID() + ": " + absenteeismCount + " absences.");
-        }
-        //TODO SQL spesifik öğrenci için devamsılık göstercek
     }
 }
