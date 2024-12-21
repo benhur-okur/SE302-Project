@@ -1,5 +1,7 @@
 package com.example.demo;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
@@ -48,7 +50,7 @@ public class AssignCourseClassroomDB {
             throw new RuntimeException("Insertion error: " + e.getMessage(), e);
         }
     }
-    public static ArrayList<Course> getCourseNamesByClassroom(Classroom classroom) {
+    public static ArrayList<Course> getCourseNamesByClassroom(String classroomName) {
         ArrayList<String> courseList = new ArrayList<>();
 
         // SQL sorgusu
@@ -58,7 +60,7 @@ public class AssignCourseClassroomDB {
              PreparedStatement preparedStatement = conn.prepareStatement(query)) {
 
             // Parametreyi ayarla
-            preparedStatement.setString(1, classroom.getClassroomName());
+            preparedStatement.setString(1, classroomName);
 
             // Sorguyu çalıştır ve sonuçları işle
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -145,6 +147,34 @@ public class AssignCourseClassroomDB {
 
         return vBoxes;
 
+    }
+    public static ObservableList<Course> getCoursesWithAssignedClassrooms(ObservableList<Course> courses) {
+        ObservableList<Course> courseList = FXCollections.observableList(courses);
+
+
+
+        for (Course course : courseList) {
+            // SQL sorgusu
+            String query = "SELECT classroom_name FROM Assign WHERE course_id = ?";
+            try (Connection conn = DatabaseConnection.getConnection();
+                 PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+
+                // Parametreyi ayarla
+                preparedStatement.setString(1, course.getCourseID());
+
+                // Sorguyu çalıştır ve sonuçları işle
+                ResultSet resultSet = preparedStatement.executeQuery();
+                course.setAssignedClassroom(new Classroom(resultSet.getString(1),
+                        ClassroomDataAccessObject.getCapacityWhereClassroomIs(resultSet.getString(1))));
+                course.setEnrolledStudentsList(AttendenceDatabase.studentObjectsOfSpecificCourse(course));
+
+            } catch (SQLException e) {
+                System.out.println("An error occurred while fetching courses: " + e.getMessage());
+                System.out.println("HATA!");
+            }
+        }
+
+        return courseList;
     }
 
 
