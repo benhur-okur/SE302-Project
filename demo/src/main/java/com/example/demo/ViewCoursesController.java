@@ -53,7 +53,7 @@ public class ViewCoursesController {
         timeToStart.setCellValueFactory(new PropertyValueFactory<>("timeToStart"));
         duration.setCellValueFactory(new PropertyValueFactory<>("duration"));
         lecturerName.setCellValueFactory(new PropertyValueFactory<>("lecturerName"));
-        
+
         tableView.setItems(allCourses);
 
         // "View Students" sütununu ekle
