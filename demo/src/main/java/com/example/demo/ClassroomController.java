@@ -45,7 +45,7 @@ public class ClassroomController {
         }
 
         // Veritabanından dersleri al
-        ArrayList<Course> courses = AssignCourseClassroomDB.getCourseNamesByClassroom(currentClassroom);
+        ArrayList<Course> courses = AssignCourseClassroomDB.getCourseNamesByClassroom(currentClassroom.getClassroomName());
         //O Classroom'un course'larını aldık!
 
         for (Course course : courses) {

@@ -55,7 +55,8 @@ public class ViewCoursesController {
         lecturerName.setCellValueFactory(new PropertyValueFactory<>("lecturerName"));
 
         // Verileri yükle
-        allCourses = CourseDataAccessObject.getCoursesWithoutStudents();
+        ObservableList<Course> hypotethicalCourses = CourseDataAccessObject.getCoursesWithoutStudents();
+        allCourses = AssignCourseClassroomDB.getCoursesWithAssignedClassrooms(hypotethicalCourses);
         tableView.setItems(allCourses);
 
         // "View Students" sütununu ekle
@@ -77,6 +78,7 @@ public class ViewCoursesController {
     private void handleCourseSelection(MouseEvent event) {
         // Get the selected course from the table
         selectedCourse = tableView.getSelectionModel().getSelectedItem();
+        selectedCourse.setStudentNames(AttendenceDatabase.studentsOfSpecificCourse(selectedCourse));
 
         // Pass the selected course to StudentManagementController and close the window
         if (selectedCourse != null) {
@@ -86,7 +88,8 @@ public class ViewCoursesController {
 
                 StudentManagementController studentManagementController = loader.getController();
 
-                studentManagementController.handleAddToCourse(selectedCourse);
+                studentManagementController.handleAddToCourse(selectedCourse); //TODO!!
+                System.out.println(selectedCourse.getStudentNames());
 
                 Stage stage = (Stage) tableView.getScene().getWindow();
                 stage.close();

@@ -252,6 +252,40 @@ public class AttendenceDatabase {
             System.out.println("An error occurred: " + e.getMessage());
         }
     }
+    public static ArrayList<Student> studentObjectsOfSpecificCourse(Course course) {
+        ArrayList<String> studentsOfCourse = new ArrayList<>();
+        ArrayList<Student> stObbjects = new ArrayList<>();
+
+
+        // SQL sorgusu
+        String query = "SELECT Students FROM COURSE WHERE Course = ?";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            // Parametre olarak courseName'i ayarla
+            pstmt.setString(1, course.getCourseID());
+
+            // Sorguyu çalıştır ve sonuçları al
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                // "Students" sütunundaki virgülle ayrılmış isimleri al
+                String studentsString = rs.getString("Students");
+
+                // İsimleri ArrayList'e dönüştür ve döndür
+                studentsOfCourse = stringToArrayList(studentsString);
+
+                for (int i = 0;i<studentsOfCourse.size();i++) {
+                    stObbjects.add(new Student(studentsOfCourse.get(i)));
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Database error: " + e.getMessage());
+        }
+
+        return stObbjects;
+    }
 }
 
 

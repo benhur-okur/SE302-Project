@@ -215,7 +215,10 @@ public class CourseDataAccessObject {
         try(Connection conn = DatabaseConnection.getConnection();
             PreparedStatement pstmt = conn.prepareStatement(sql)){
 
-            ArrayList<String> currentStudents = course.getStudentNames();
+            System.out.println(course.getStudentNames());
+
+            ArrayList<String> currentStudents = new ArrayList<>(course.getStudentNames());
+
             currentStudents.add(student.getName());
             String addedStudents = String.join(",", currentStudents);
 
