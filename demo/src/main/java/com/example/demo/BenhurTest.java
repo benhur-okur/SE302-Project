@@ -10,11 +10,13 @@ public class BenhurTest {
 
 
 
-        CourseDataAccessObject.createTable();
-        CourseDataAccessObject.addCourse(csv.readCourses());
 
-
-
+/*
+        CourseDataAccessObject courseDataAccessObject = new CourseDataAccessObject();
+        courseDataAccessObject.createTable();
+        courseDataAccessObject.addCourse(csv.readCourses());
+        courseDataAccessObject.getCourses();
+ */
 
 
         /*
@@ -24,6 +26,8 @@ public class BenhurTest {
         AttendenceDatabase.addAttendancesWithInitialDatas();
 
          */
+
+
 
 
 
