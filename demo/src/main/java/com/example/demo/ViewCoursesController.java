@@ -97,6 +97,21 @@ public class ViewCoursesController {
         tableView.setOnMouseClicked(this::handleCourseSelection);  // Course selection handler
 
     }
+
+    @FXML
+    private void openCreateCoursePage() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CreateCourse.fxml"));
+        Parent root = fxmlLoader.load();
+
+        //yeni stage oluştur ve .fxml'i göster
+        Stage stage = new Stage();
+        stage.setMinWidth(400);
+        stage.setMinHeight(400);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Create Management");
+        stage.setScene(new Scene(root));
+        stage.showAndWait();
+    }
     public void setTableView () {
         ObservableList<Course> hypotethicalCourses = CourseDataAccessObject.getCoursesWithoutStudents();
         allCourses = AssignCourseClassroomDB.getCoursesWithAssignedClassrooms(hypotethicalCourses);

@@ -22,11 +22,9 @@ public class CourseDataAccessObject {
         } catch (SQLException e) {
             System.out.println("Creating table error: " + e.getMessage());
         }
-        
+
  */
-
-
-
+        
 
         String sql = """
             CREATE TABLE IF NOT EXISTS Course (
@@ -34,7 +32,7 @@ public class CourseDataAccessObject {
                               TimeToStart TEXT NOT NULL,
                               DurationInLectureHours INTEGER NOT NULL,
                               Lecturer TEXT NOT NULL,
-                              Students TEXT NOT NULL,
+                              Students TEXT ,
                                UNIQUE(Course) \s
                          );
         \s""";
@@ -82,6 +80,22 @@ public class CourseDataAccessObject {
                 pstmt.executeUpdate();
 
             }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void addSingleCourse(Course course){
+
+        String sql = "INSERT OR IGNORE INTO Course(Course, TimeToStart, DurationInLectureHours, Lecturer) VALUES (?, ?, ?, ?)";
+        try(Connection conn = DatabaseConnection.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)){
+                pstmt.setString(1, course.getCourseID());
+                pstmt.setString(2, course.getTimeToStart());
+                pstmt.setInt(3, course.getDuration());
+                pstmt.setString(4, course.getLecturerName());
+                pstmt.executeUpdate();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

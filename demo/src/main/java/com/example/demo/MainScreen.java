@@ -49,7 +49,7 @@ public class MainScreen extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(MainScreen.class.getResource("MainScreen.fxml"));
         //FXMLLoader fxmlLoader = new FXMLLoader(MainScreen.class.getResource("Students.fxml"));
 
-        Scene scene = new Scene(fxmlLoader.load(), 1176, 875);
+        Scene scene = new Scene(fxmlLoader.load(), 900, 750);
 
         primaryStage.setMinWidth(400); // Minimum genişlik
         primaryStage.setMinHeight(400); // Minimum yükseklik
