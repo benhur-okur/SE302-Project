@@ -33,9 +33,9 @@ public class AssignCourseClassroomDB {
 
     }
 
-    public static void initializeAssigning (Course course, Classroom classroom) {
+    public static void initializeAssigning (Course course, String classroom) {
         String courseName = course.getCourseID();
-        String classroomName = classroom.getClassroomName();
+        String classroomName = classroom;
 
         String insertQuery = "INSERT OR IGNORE INTO Assign(course_id, classroom_name) VALUES (?, ?)";
 

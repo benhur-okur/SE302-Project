@@ -95,7 +95,7 @@ public class Course {
         // Sınıfı ata ve kursu sınıfın ders listesine ekle
         this.assignedClassroom = assignedClassroom;
         assignedClassroom.getCourses().add(this);
-        AssignCourseClassroomDB.initializeAssigning(this, assignedClassroom);
+        AssignCourseClassroomDB.initializeAssigning(this, assignedClassroom.getClassroomName());
 
         classroomName = assignedClassroom.getClassroomName();
 
