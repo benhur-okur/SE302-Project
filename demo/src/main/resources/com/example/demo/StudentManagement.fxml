@@ -19,9 +19,9 @@
          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
       </columnResizePolicy>
     </TableView>
-    <Button fx:id="addStudentButton" layoutX="595.0" layoutY="42.0" mnemonicParsing="false" onAction="#OpenViewCoursesAdd" prefHeight="39.0" prefWidth="150.0" text="Enroll" />
-    <Button fx:id="removeStudentButton" layoutX="595.0" layoutY="91.0" mnemonicParsing="false" onAction="#handleRemoveStudentFromCourse" prefHeight="39.0" prefWidth="150.0" text="Withdraw" />
-    <Button fx:id="transferStudentButton" layoutX="595.0" layoutY="139.0" mnemonicParsing="false" onAction="#OpenViewCoursesTransfer" prefHeight="39.0" prefWidth="149.0" text="Transfer" />
+    <Button fx:id="addStudentButton" layoutX="595.0" layoutY="83.0" mnemonicParsing="false" onAction="#OpenViewCoursesAdd" prefHeight="26.0" prefWidth="150.0" text="Enroll" />
+    <Button fx:id="removeStudentButton" layoutX="595.0" layoutY="118.0" mnemonicParsing="false" onAction="#handleRemoveStudentFromCourse" prefHeight="26.0" prefWidth="150.0" text="Withdraw" />
+    <Button fx:id="transferStudentButton" layoutX="595.0" layoutY="152.0" mnemonicParsing="false" onAction="#OpenViewCoursesTransfer" prefHeight="26.0" prefWidth="150.0" text="Transfer" />
     <Label fx:id="studentNameLabel" alignment="CENTER" layoutX="-3.0" layoutY="-5.0" prefHeight="18.0" prefWidth="861.0" text="studentNameLabel" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <font>
             <Font size="16.0" />
@@ -51,4 +51,5 @@
          <RowConstraints minHeight="40.0" />
       </rowConstraints>
    </GridPane>
+   <Button fx:id="refreshButton" layoutX="694.0" layoutY="13.0" mnemonicParsing="false" onAction="#refreshView" text="Refresh" />
 </AnchorPane>
