@@ -100,7 +100,7 @@ public class ViewCoursesController {
     public void setTableView () {
         ObservableList<Course> hypotethicalCourses = CourseDataAccessObject.getCoursesWithoutStudents();
         allCourses = AssignCourseClassroomDB.getCoursesWithAssignedClassrooms(hypotethicalCourses);
-        allCourses = CourseDataAccessObject.getCoursesWithoutStudents();
+        //allCourses = CourseDataAccessObject.getCoursesWithoutStudents();
         tableView.setItems(allCourses);
         ArrayList<Course> arrayList = new ArrayList<>(MainScreen.courseList);
         ObservableList<Course> courseObservableList = FXCollections.observableList(arrayList);
@@ -141,7 +141,7 @@ public class ViewCoursesController {
 
                 studentManagementController.handleAddToCourse(selectedCourse); //TODO!!
                 System.out.println(selectedCourse.getStudentNames());
-                CourseDataAccessObject.updateForAddingStudentToCourse(selectedCourse, selectedStudent);
+                //CourseDataAccessObject.updateForAddingStudentToCourse(selectedCourse, selectedStudent);
 
                 Stage stage = (Stage) tableView.getScene().getWindow();
                 stage.close();
