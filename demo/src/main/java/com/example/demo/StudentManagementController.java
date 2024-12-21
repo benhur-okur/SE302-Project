@@ -13,6 +13,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -23,6 +25,10 @@ public class StudentManagementController {
 
     @FXML
     private Label studentNameLabel; // Label to display student name
+
+    @FXML
+    private GridPane scheduleGrid = new GridPane();
+    @FXML
 
     public static Student student; // Instance variable to hold the student object
 
@@ -46,6 +52,9 @@ public class StudentManagementController {
         // Initialize the TableColumn to display course IDs
         CoursesColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCourseID()));
 
+        setupLabels();
+        populateCourses();
+
         // Ensure that the student object is set before calling any methods that depend on it
         if (student != null) {
             System.out.println(student);
@@ -62,7 +71,6 @@ public class StudentManagementController {
         transferStudentButton.setOnAction(event -> OpenViewCoursesTransfer());
 
     }
-
 
     private void loadCourses() {
         // Fetch courses based on the student
@@ -101,6 +109,7 @@ public class StudentManagementController {
 
         // Pass the action type to the ViewCoursesController
         ViewCoursesController controller = fxmlLoader.getController();
+        ViewCoursesController.selectedStudent = student;
 
         // Create a new stage and show the FXML
         Stage stage = new Stage();
@@ -201,6 +210,98 @@ public class StudentManagementController {
         } else {
             System.out.println("Please courses and ensure a student is selected.");
         }
+    }
+
+    // Günler ve saatler için grid başlıklarını ayarla
+    private void setupLabels() {
+        String[] days = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+        String[] timeSlots = generateTimeSlots("08:30", "19:30", 55);
+
+        // Gün başlıklarını (Column 0 hariç) GridPane'e ekle
+        for (int col = 1; col <= days.length; col++) {
+            Label dayLabel = new Label(days[col - 1]);
+            scheduleGrid.add(dayLabel, col, 0); // İlk satır, her bir gün için
+        }
+
+        // Saat başlıklarını (Row 0 hariç) GridPane'e ekle
+        for (int row = 1; row <= timeSlots.length; row++) {
+            Label timeLabel = new Label(timeSlots[row - 1]);
+            scheduleGrid.add(timeLabel, 0, row); // İlk sütun, her bir saat dilimi için
+        }
+    }
+
+    // Dersleri GridPane'e ekle
+    private void populateCourses() {
+        if (student == null) {
+            System.out.println("No lecturer selected.");
+            return;
+        }
+
+        // Veritabanından dersleri al
+        ArrayList<VBox> vBoxes = AssignCourseClassroomDB.getAssign(CourseDataAccessObject.getCoursesBasedOnStudent(student.getName()));
+        //O Classroom'un course'larını aldık!
+
+        for (VBox vbox : vBoxes) {
+            Course currentCourse;
+            Label courseIDLabel = (Label) vbox.getChildren().get(0);
+            String courseID = courseIDLabel.getText();
+            currentCourse = CourseDataAccessObject.getCourseByCourseID(courseID);
+
+
+            int col = getDayColumnIndex(currentCourse.getCourseDay());
+            int row = getTimeRowIndex(currentCourse.getStartTime().toString());
+
+            /*
+            Label courseLabel = new Label(course.getCourseID());
+            Label classroomLabel = new Label(course.getAssignedClassroom().getClassroomName());
+            VBox vbox = new VBox();
+            vbox.setSpacing(10); // Etiketler arasında 10 piksel boşluk
+            vbox.getChildren().addAll(courseLabel, classroomLabel);
+
+             */
+            scheduleGrid.add(vbox, col, row);
+
+        }
+
+    }
+
+    // Haftanın günleri için sütun indekslerini döndür
+    private static int getDayColumnIndex(String day) {
+        switch (day) {
+            case "Monday": return 1;
+            case "Tuesday": return 2;
+            case "Wednesday": return 3;
+            case "Thursday": return 4;
+            case "Friday": return 5;
+            case "Saturday": return 6;
+            case "Sunday": return 7;
+            default: return -1;
+        }
+    }
+
+    // Saat dilimleri için satır indekslerini döndür
+    private static int getTimeRowIndex(String time) {
+        String[] timeSlots = generateTimeSlots("08:30", "19:30", 55);
+        for (int i = 0; i < timeSlots.length; i++) {
+            if (timeSlots[i].equals(time)) {
+                return i + 1; // İlk satır başlık için ayrılmış
+            }
+        }
+        return -1;
+    }
+
+    // Belirli bir başlangıç saatinden itibaren zaman dilimlerini oluştur
+    private static String[] generateTimeSlots(String startTime, String endTime, int intervalMinutes) {
+        ArrayList<String> timeSlots = new ArrayList<>();
+        java.time.LocalTime start = java.time.LocalTime.parse(startTime);
+        java.time.LocalTime end = java.time.LocalTime.parse(endTime);
+
+        while (!start.isAfter(end)) {
+            timeSlots.add(start.toString());
+            start = start.plusMinutes(intervalMinutes);
+        }
+
+        return timeSlots.toArray(new String[0]);
     }
 
 }
