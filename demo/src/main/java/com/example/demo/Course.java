@@ -20,6 +20,7 @@ public class Course {
     private ArrayList<Student> enrolledStudentsList;
     private ArrayList<Attendance> attendanceRecordList;
     private CourseDataAccessObject courseDAO;
+    private String classroomName;
 
 
     public Course(String courseID, String timeToStart,int duration, String lecturerName, ArrayList<String> studentNames) {
@@ -39,6 +40,7 @@ public class Course {
         createStudents(studentNames);
         this.attendanceRecordList = new ArrayList<>();
         courseDAO = new CourseDataAccessObject();
+
 
     }
 
@@ -94,6 +96,8 @@ public class Course {
         this.assignedClassroom = assignedClassroom;
         assignedClassroom.getCourses().add(this);
         AssignCourseClassroomDB.initializeAssigning(this, assignedClassroom);
+
+        classroomName = assignedClassroom.getClassroomName();
 
         // Test için log yazdır
         //System.out.println(this.getCourseID() + ": Assigned to " + assignedClassroom.getClassroomName() +
@@ -266,5 +270,13 @@ public class Course {
 
     public ArrayList<Student> getStudents() {
         return enrolledStudentsList;
+    }
+
+    public String getClassroomName() {
+        return classroomName;
+    }
+
+    public void setClassroomName(String classroomName) {
+        this.classroomName = classroomName;
     }
 }
