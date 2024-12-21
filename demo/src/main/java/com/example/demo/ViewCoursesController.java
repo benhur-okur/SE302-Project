@@ -53,10 +53,7 @@ public class ViewCoursesController {
         timeToStart.setCellValueFactory(new PropertyValueFactory<>("timeToStart"));
         duration.setCellValueFactory(new PropertyValueFactory<>("duration"));
         lecturerName.setCellValueFactory(new PropertyValueFactory<>("lecturerName"));
-
-        // Verileri yükle
-        ObservableList<Course> hypotethicalCourses = CourseDataAccessObject.getCoursesWithoutStudents();
-        allCourses = AssignCourseClassroomDB.getCoursesWithAssignedClassrooms(hypotethicalCourses);
+        
         tableView.setItems(allCourses);
 
         // "View Students" sütununu ekle
