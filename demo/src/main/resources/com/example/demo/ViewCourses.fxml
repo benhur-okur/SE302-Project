@@ -16,9 +16,9 @@
         <ColumnConstraints hgrow="ALWAYS" />
     </columnConstraints>
     <rowConstraints>
-        <RowConstraints vgrow="ALWAYS" />
-        <RowConstraints vgrow="ALWAYS" />
-      <RowConstraints />
+        <RowConstraints vgrow="NEVER" /> <!-- Arama kısmının sabit kalması için -->
+        <RowConstraints vgrow="NEVER" /> <!-- Arama kısmının sabit kalması için -->
+        <RowConstraints vgrow="ALWAYS" /> <!-- TableView'in esnemesini sağlamak için -->
     </rowConstraints>
 
     <!-- Arama Alanı -->
