@@ -286,6 +286,27 @@ public class AttendenceDatabase {
 
         return stObbjects;
     }
+    public static void deleteAttendanceRecord(Student student, Course course) throws SQLException {
+        String sql = "DELETE FROM attendance WHERE student_name = ? AND course_name = ?";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            // Parametreleri ayarla
+            pstmt.setString(1, student.getName());
+            pstmt.setString(2, course.getCourseID());
+
+            int affectedRows = pstmt.executeUpdate();
+            if (affectedRows > 0) {
+                System.out.println("Attendance kaydı başarıyla silindi.");
+            } else {
+                System.out.println("Attendance kaydı bulunamadı.");
+            }
+        } catch (SQLException e) {
+            System.out.println("Attendance kaydı silinirken hata oluştu: " + e.getMessage());
+            throw e;
+        }
+    }
 }
 
 
