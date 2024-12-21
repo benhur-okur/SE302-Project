@@ -109,6 +109,7 @@ public class StudentManagementController {
 
         // Pass the action type to the ViewCoursesController
         ViewCoursesController controller = fxmlLoader.getController();
+        ViewCoursesController.selectedStudent = student;
 
         // Create a new stage and show the FXML
         Stage stage = new Stage();

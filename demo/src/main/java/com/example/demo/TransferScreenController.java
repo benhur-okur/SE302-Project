@@ -69,8 +69,15 @@ public class TransferScreenController {
         lecturerName.setCellValueFactory(new PropertyValueFactory<>("lecturerName"));
 
         // Verileri yükle
+        ObservableList<Course> hypotethicalCourses = CourseDataAccessObject.getCoursesWithoutStudents();
+        allCourses = AssignCourseClassroomDB.getCoursesWithAssignedClassrooms(hypotethicalCourses);
+        tableView.setItems(allCourses);
+
+        /*
         allCourses = CourseDataAccessObject.getCoursesWithoutStudents();
         tableView.setItems(allCourses);
+
+         */
 
         courseTableView.setOnMouseClicked(this::handleCourseSelection);  // Course selection handler
         tableView.setOnMouseClicked(this::handleCourseSelection2);  // Course selection handler
@@ -118,6 +125,8 @@ public class TransferScreenController {
     private void handleCourseSelection2(MouseEvent event) {
         // Get the selected course from the table
         selectedCourse2 = tableView.getSelectionModel().getSelectedItem();
+        selectedCourse2.setStudentNames(AttendenceDatabase.studentsOfSpecificCourse(selectedCourse2));
+
 
         // Pass the selected course to StudentManagementController and close the window
         if (selectedCourse2 != null) {
