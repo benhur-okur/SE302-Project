@@ -36,9 +36,12 @@ public class MainScreen extends Application {
         }
 
         ArrayList<Course> studentCourses = CourseDataAccessObject.getCoursesBasedOnStudent("DOĞA GÜNEŞ");
+        /*
         for(Course crs : studentCourses) {
             System.out.println(crs + " " + crs.getCourseID());
         }
+
+         */
         hostServices = getHostServices();
         FXMLLoader fxmlLoader = new FXMLLoader(MainScreen.class.getResource("MainScreen.fxml"));
         //FXMLLoader fxmlLoader = new FXMLLoader(MainScreen.class.getResource("Students.fxml"));
