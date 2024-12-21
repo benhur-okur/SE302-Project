@@ -27,7 +27,7 @@
         <TextField fx:id="searchField" promptText="Enter course ID" />
         <Button fx:id="searchButton" text="Search" />
         <Button fx:id="resetButton" text="Reset" />
-      <Button fx:id="searchButton1" layoutX="217.0" layoutY="10.0" text="Create New Course" />
+      <Button fx:id="searchButton1" layoutX="217.0" layoutY="10.0" onAction="#openCreateCoursePage" text="Create New Course" />
     </HBox>
 
     <!-- TableView -->

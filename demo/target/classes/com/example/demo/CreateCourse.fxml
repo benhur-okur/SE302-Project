@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="729.0" prefWidth="590.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.CreateCourseController">
+   <children>
+   
+          <Label layoutX="240.0" layoutY="22.0" style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Create New Course" />
+        <Label layoutX="140.0" layoutY="60.0" text="Course Name:" />
+        <TextField fx:id="courseNameField" layoutX="103.0" layoutY="84.0" promptText="Enter course name..." />
+        <Label layoutX="145.0" layoutY="126.0" text="Select Lecturer:" />
+        <ListView fx:id="lecturerListView" layoutX="377.0" layoutY="144.0" prefHeight="150.0" prefWidth="150.0" />
+        <Label layoutX="416.0" layoutY="126.0" text="Start Time:" />
+        <ListView fx:id="startTimeListView" layoutX="110.0" layoutY="144.0" prefHeight="150" prefWidth="150" />
+        <Label layoutX="148.0" layoutY="337.0" text="Select Day:" />
+        <ListView fx:id="dayListView" layoutX="110.0" layoutY="355.0" prefHeight="150" prefWidth="150" />
+        <Label layoutX="398.0" layoutY="337.0" text="Select Classroom:" />
+        <ListView fx:id="classroomListView" layoutX="377.0" layoutY="355.0" prefHeight="150" prefWidth="150" />
+        <Label layoutX="143.0" layoutY="539.0" text="Select Duration:" />
+        <ListView fx:id="durationListView" layoutX="110.0" layoutY="557.0" prefHeight="150" prefWidth="150" />
+        <Button layoutX="370.0" layoutY="582.0" onAction="#handleCreateCourse" text="Create Course" />
+        <Button layoutX="491.0" layoutY="582.0" onAction="#handleCancel" text="Cancel" />
+   </children>
+</AnchorPane>

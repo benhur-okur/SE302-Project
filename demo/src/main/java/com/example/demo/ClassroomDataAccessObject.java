@@ -73,6 +73,23 @@ public class ClassroomDataAccessObject {
         return  allClassroom;
     }
 
+    public static ArrayList<String> getClassroomsNames() {
+        ArrayList<String> allClassroom = new ArrayList<>();
+        String sql = "SELECT Classroom FROM Classroom";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+            while (rs.next()) {
+
+                allClassroom.add((rs.getString("Classroom")));
+
+            }
+        } catch (SQLException e) {
+            System.out.println("Query error: " + e.getMessage());
+        }
+        return  allClassroom;
+    }
+
     public static int getCapacityWhereClassroomIs(String classroomName) {
         int capacity = 0;
         String sql = "SELECT Capacity FROM Classroom WHERE Classroom = ?";
