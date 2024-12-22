@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -25,7 +26,7 @@ import java.io.IOException;
 public class ViewCoursesController {
 
     @FXML
-    private TableView<Course> tableView;
+    public TableView<Course> tableView;
     @FXML
     private TableColumn<Course, String> courseID;
     @FXML
@@ -37,7 +38,7 @@ public class ViewCoursesController {
     @FXML
     private TableColumn<String, String> assignedClassroom;
     @FXML
-    private TableColumn<Course, String> changeClassroom;
+    private TableColumn<Course, Void> changeClassroom;
     @FXML
     private TableColumn<Course, Void> viewStudentsColumn;
     @FXML
@@ -48,6 +49,8 @@ public class ViewCoursesController {
     private Button resetButton;
     @FXML
     private Button createCourseButton;
+
+    public ViewCoursesController viewCoursesController = this;
 
     public static Student selectedStudent;
 
@@ -67,26 +70,12 @@ public class ViewCoursesController {
         assignedClassroom.setCellValueFactory(new PropertyValueFactory<>("classroomName"));
 
 
-
-        /*
-        for(Course crs : allCourses) {
-            System.out.println(crs.getAssignedClassroom());
-        }
-
-         */
-
-
         setTableView();
-        /*
-        ObservableList<Course> hypotethicalCourses = CourseDataAccessObject.getCoursesWithoutStudents();
-        allCourses = AssignCourseClassroomDB.getCoursesWithAssignedClassrooms(hypotethicalCourses);
-        allCourses = CourseDataAccessObject.getCoursesWithoutStudents();
-        tableView.setItems(allCourses);
-
-         */
 
         // "View Students" sütununu ekle
         addViewStudentsButton();
+
+        addChangeClassroomButton();
 
         // Arama butonuna işlem bağla
         searchButton.setOnAction(event -> searchCourse());
@@ -128,22 +117,6 @@ public class ViewCoursesController {
         tableView.setItems(courseObservableList);
 
     }
-    /*
-    public void setTableViewFiltered (ObservableList<Course> filteredCourses) {
-
-        ObservableList<Course> hypotethicalCourses = CourseDataAccessObject.getCoursesWithoutStudents();
-        allCourses = AssignCourseClassroomDB.getCoursesWithAssignedClassrooms(hypotethicalCourses);
-        allCourses = CourseDataAccessObject.getCoursesWithoutStudents();
-
-
-        tableView.setItems(filteredCourses);
-        ArrayList<Course> arrayList = new ArrayList<>(MainScreen.courseList);
-        ObservableList<Course> courseObservableList = FXCollections.observableList(arrayList);
-        tableView.setItems(courseObservableList);
-
-    }
-
-     */
 
     // Event handler for when a course is clicked
     @FXML
@@ -172,6 +145,49 @@ public class ViewCoursesController {
         }
 
     }
+
+    private void addChangeClassroomButton() {
+        Callback<TableColumn<Course, Void>, TableCell<Course, Void>> cellFactory = new Callback<>() {
+            @Override
+            public TableCell<Course, Void> call(final TableColumn<Course, Void> param) {
+                return new TableCell<>() {
+                    private final ChoiceBox<String> choiceBox = new ChoiceBox<>();
+                    private final Button btn = new Button("Change");
+                    private final HBox container = new HBox(10); // ChoiceBox ve Button için bir konteyner
+
+                    {
+                        // Classroom'ları ChoiceBox'a ekle
+                        choiceBox.getItems().addAll(ClassroomDataAccessObject.getClassroomsNames());
+
+                        // Butona tıklanınca sınıf değişimini yap
+                        btn.setOnAction(event -> {
+                            Course selectedCourse = getTableView().getItems().get(getIndex());
+                            String selectedClassroom = choiceBox.getValue();
+                            if (selectedClassroom != null) {
+                                AssignCourseClassroomDB.updateClassroomForCourse(selectedCourse, selectedClassroom, viewCoursesController);
+                            }
+                        });
+
+                        // HBox içine ChoiceBox ve Button ekle
+                        container.getChildren().addAll(choiceBox, btn);
+                    }
+
+                    @Override
+                    protected void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null); // Hücre boşsa hiçbir şey gösterme
+                        } else {
+                            setGraphic(container); // Hücre doluysa ChoiceBox ve Button'ı göster
+                        }
+                    }
+                };
+            }
+        };
+
+        changeClassroom.setCellFactory(cellFactory); // "Change Classroom" sütununu güncelle
+    }
+
 
     private void searchCourse() {
         String searchQuery = searchField.getText();
