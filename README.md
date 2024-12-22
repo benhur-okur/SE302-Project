@@ -4,7 +4,7 @@ Welcome to the Syllabus Manager Wiki! This system optimizes course scheduling, c
 
 # Overview
 
-Syllabus Manager is a standalone Windows desktop application designed to handle up to 25,000 student records efficiently. It provides separate interfaces for administrators, lecturers, and students, all while maintaining data in a SQLite database.
+Syllabus Manager is a desktop application designed to streamline course and classroom management. It allows users to create, edit, and manage courses, student enrollments, and classroom assignments through an intuitive interface.
 
 # Prerequisites
 Operating system: Windows
