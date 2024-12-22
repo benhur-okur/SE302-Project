@@ -105,7 +105,6 @@ public class Course {
         //System.out.println(this.getCourseDay() + " " + this.getStartTime() + " - " + this.getEndTime(this.getStartTime()));
     }
 
-    //TODO: BU CREATELER SİLİNEBİLİR :o
     public void createLecturer(String lecturerName) {
         lecturer = Lecturer.findLecturerByName(lecturerName);
 
@@ -115,9 +114,8 @@ public class Course {
 
         if (!courseExists) {
             lecturer.getCourses().add(this);
-            //System.out.println(lecturerName + " " + this.getCourseID() + " dersine eklendi.");
         } else {
-           // System.out.println(this.getCourseID() + " dersi zaten hocanın ders listesinde.");
+
         }
     }
 
@@ -125,15 +123,12 @@ public class Course {
         for (String studentName : studentNames) {
             Student student = Student.findStudentByName(studentName);
 
-            // Eğer öğrenci zaten bu dersi alıyorsa, ekleme
             boolean courseExists = student.getCourses().stream()
                     .anyMatch(course -> course.getCourseID().equals(this.getCourseID()));
 
             if (!courseExists) {
                 student.getCourses().add(this); // Öğrenciye dersi ekle
-                //System.out.println(studentName + " " + this.getCourseID() + " dersine eklendi.");
             } else {
-                //System.out.println(this.getCourseID() + " dersi zaten " + studentName + "'in ders listesinde.");
             }
             this.enrolledStudentsList.add(student);
         }
@@ -179,25 +174,14 @@ public class Course {
         return timeToStart;
     }
 
-    public void setTimeToStart(String timeToStart) {
-        this.timeToStart = timeToStart;
-    }
-
     public int getDuration() {
         return duration;
-    }
-
-    public void setDuration(int duration) {
-        this.duration = duration;
     }
 
     public String getLecturerName() {
         return lecturerName;
     }
 
-    public void setLecturerName(String lecturerName) {
-        this.lecturerName = lecturerName;
-    }
 
     public ArrayList<String> getStudentNames() {
         return studentNames;
@@ -207,20 +191,9 @@ public class Course {
         this.studentNames = studentNames;
     }
 
-    public void setCourseDay(String courseDay) {
-        this.courseDay = courseDay;
-    }
-
-    public void setStartTime(LocalTime startTime) {
-        this.startTime = startTime;
-    }
 
     public LocalTime getEndTime() {
         return endTime;
-    }
-
-    public void setEndTime(LocalTime endTime) {
-        this.endTime = endTime;
     }
 
     public Lecturer getLecturer() {

@@ -52,12 +52,9 @@ public class TransferScreenController {
 
         // Ensure that the student object is set before calling any methods that depend on it
         if (student != null) {
-            System.out.println(student);
             loadCourses();
         }
-        if (student == null) {
-            System.out.println("student NULL");
-        }
+
 
         // Initialize the TableColumn to display course IDs
         CoursesColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCourseID()));
@@ -105,7 +102,7 @@ public class TransferScreenController {
     // Set the student object for this controller
     public void setStudent(Student student) {
         this.student = student;  // Assign the student to the class variable
-        System.out.println("Student set: " + student.getName());
+        //System.out.println("Student set: " + student.getName());
         loadCourses();  // Reload courses based on the student
     }
 
@@ -114,7 +111,7 @@ public class TransferScreenController {
     private void handleCourseSelection(MouseEvent event) {
         selectedCourse1 = courseTableView.getSelectionModel().getSelectedItem();
         if (selectedCourse1 != null) {
-            System.out.println("Selected course 1: " + selectedCourse1.getCourseID());
+            //System.out.println("Selected course 1: " + selectedCourse1.getCourseID());
         }
     }
 

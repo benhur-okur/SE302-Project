@@ -58,11 +58,10 @@ public class StudentManagementController {
 
         // Ensure that the student object is set before calling any methods that depend on it
         if (student != null) {
-            System.out.println(student);
             loadCourses();
         }
         if (student == null) {
-            System.out.println("student NULL");
+            //System.out.println("student NULL");
         }
 
         addStudentButton.setOnAction(event -> OpenViewCoursesAdd());
@@ -87,7 +86,6 @@ public class StudentManagementController {
             // Sadece dersleri tekrar yerleştir
             populateCourses();
 
-            System.out.println("View refreshed successfully!");
         } else {
             System.out.println("No student selected, nothing to refresh.");
         }
@@ -292,7 +290,6 @@ public class StudentManagementController {
     // Dersleri GridPane'e ekle
     private void populateCourses() {
         if (student == null) {
-            System.out.println("No lecturer selected.");
             return;
         }
 
