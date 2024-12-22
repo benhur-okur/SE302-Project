@@ -84,8 +84,6 @@ public class ViewCoursesController {
         resetButton.setOnAction(event -> resetTable());
 
 
-        tableView.setOnMouseClicked(this::handleCourseSelection);  // Course selection handler
-
     }
 
     @FXML
@@ -119,33 +117,6 @@ public class ViewCoursesController {
 
     }
 
-    // Event handler for when a course is clicked
-    @FXML
-    private void handleCourseSelection(MouseEvent event) {
-        // Get the selected course from the table
-        selectedCourse = tableView.getSelectionModel().getSelectedItem();
-        selectedCourse.setStudentNames(AttendenceDatabase.studentsOfSpecificCourse(selectedCourse));
-
-        // Pass the selected course to StudentManagementController and close the window
-        if (selectedCourse != null) {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("StudentManagement.fxml"));
-                Parent root = loader.load();  // Ensure the controller is loaded
-
-                StudentManagementController studentManagementController = loader.getController();
-
-                studentManagementController.handleAddToCourse(selectedCourse); //TODO!!
-                System.out.println(selectedCourse.getStudentNames());
-                //CourseDataAccessObject.updateForAddingStudentToCourse(selectedCourse, selectedStudent);
-
-                Stage stage = (Stage) tableView.getScene().getWindow();
-                stage.close();
-            } catch (IOException e) {
-                e.printStackTrace();  // Handle any exceptions that might occur during the loading of the FXML
-            }
-        }
-
-    }
 
     private void addChangeClassroomButton() {
         Callback<TableColumn<Course, Void>, TableCell<Course, Void>> cellFactory = new Callback<>() {
