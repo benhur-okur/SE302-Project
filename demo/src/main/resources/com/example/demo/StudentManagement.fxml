@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="496.0" prefWidth="760.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.StudentManagementController">
+<AnchorPane prefHeight="496.0" prefWidth="760.0" stylesheets="@StudentManagementStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.StudentManagementController">
     <TableView fx:id="courseTableView" layoutX="595.0" layoutY="188.0" prefHeight="294.0" prefWidth="150.0">
         <columns>
             <TableColumn fx:id="CoursesColumn" prefWidth="398.3999816894531" text="Courses" />
@@ -51,5 +51,5 @@
          <RowConstraints minHeight="40.0" />
       </rowConstraints>
    </GridPane>
-   <Button fx:id="refreshButton" layoutX="694.0" layoutY="13.0" mnemonicParsing="false" onAction="#refreshView" text="Refresh" />
+   <Button fx:id="refreshButton" layoutX="654.0" layoutY="3.0" mnemonicParsing="false" onAction="#refreshView" text="Refresh" />
 </AnchorPane>

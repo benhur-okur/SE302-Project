@@ -7,10 +7,10 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="440.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.EnrollCourseScreenController">
+<AnchorPane prefHeight="440.0" prefWidth="400.0" stylesheets="@EnrollCourseStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.EnrollCourseScreenController">
     <children>
         <Label layoutX="14.0" layoutY="14.0" text="Search:" />
-        <TextField fx:id="searchField" layoutX="60.0" layoutY="9.0" prefHeight="26.0" prefWidth="191.0" promptText="Enter course name..." />
+        <TextField fx:id="searchField" layoutX="60.0" layoutY="9.0" prefHeight="29.0" prefWidth="184.0" promptText="Enter course name..." />
       <TableView fx:id="tableView" layoutY="74.0" prefHeight="398.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
         <columns>
           <TableColumn fx:id="courseID" prefWidth="131.19995725154877" text="Course ID" />
@@ -18,7 +18,7 @@
             <TableColumn fx:id="duration" prefWidth="122.4000244140625" text="Duration" />
         </columns>
       </TableView>
-      <Button fx:id="searchButton" layoutX="260.0" layoutY="10.0" mnemonicParsing="false" text="Search" />
-      <Button fx:id="resetButton" layoutX="320.0" layoutY="10.0" mnemonicParsing="false" text="Reset" />
+      <Button fx:id="searchButton" layoutX="251.0" layoutY="10.0" mnemonicParsing="false" text="Search" />
+      <Button fx:id="resetButton" layoutX="329.0" layoutY="10.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="69.0" text="Reset" />
     </children>
 </AnchorPane>

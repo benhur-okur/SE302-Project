@@ -1,119 +1,106 @@
-/* Root and container styling */
+/* Main colors */
 .root {
     -fx-background-color: #f5f7fa;
     -fx-font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
 }
 
-.stack-pane {
+/* AnchorPane styling */
+.anchor-pane {
     -fx-background-color: transparent;
-}
-
-.v-box {
-    -fx-padding: 20px;
-    -fx-alignment: center;
-}
-
-/* Search section styling */
-.h-box {
     -fx-padding: 10px;
-    -fx-spacing: 10px;
-    -fx-alignment: center;
-    -fx-background-color: white;
-    -fx-background-radius: 8px;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 4, 0, 0, 2);
 }
 
+/* Label styling */
+.label {
+    -fx-text-fill: #2c3e50;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+/* TextField styling */
 .text-field {
-    -fx-background-color: #f8f9fa;
-    -fx-background-radius: 4px;
+    -fx-background-color: white;
     -fx-border-color: #e1e8ed;
     -fx-border-radius: 4px;
-    -fx-padding: 8px 12px;
+    -fx-background-radius: 4px;
+    -fx-padding: 5px 10px;
     -fx-font-size: 13px;
 }
 
 .text-field:focused {
     -fx-border-color: #3498db;
     -fx-background-color: white;
-}
-
-.text-field .prompt-text {
-    -fx-text-fill: #95a5a6;
+    -fx-effect: dropshadow(gaussian, rgba(52, 152, 219, 0.3), 4, 0, 0, 0);
 }
 
 /* Button styling */
 .button {
     -fx-background-color: #3498db;
     -fx-text-fill: white;
-    -fx-padding: 8px 16px;
+    -fx-padding: 5px 15px;
+    -fx-border-radius: 4px;
     -fx-background-radius: 4px;
-    -fx-cursor: hand;
     -fx-font-size: 13px;
+    -fx-cursor: hand;
+    -fx-min-width: 60px;
 }
 
 .button:hover {
     -fx-background-color: #2980b9;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 4, 0, 0, 0);
 }
 
-#clearBBtn {
+.button:pressed {
+    -fx-background-color: #2472a4;
+}
+
+#resetButton {
     -fx-background-color: #95a5a6;
 }
 
-#clearBBtn:hover {
+#resetButton:hover {
     -fx-background-color: #7f8c8d;
-}
-
-#searchBtn {
-    -fx-background-color: #27ae60;
-}
-
-#searchBtn:hover {
-    -fx-background-color: #219a52;
 }
 
 /* TableView styling */
 .table-view {
-    -fx-background-color: white;
+    -fx-background-color: transparent;
     -fx-border-color: #e1e8ed;
-    -fx-border-radius: 8px;
-    -fx-background-radius: 8px;
+    -fx-border-radius: 4px;
     -fx-padding: 0;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 4, 0, 0, 2);
 }
 
 .table-view .column-header-background {
     -fx-background-color: #34495e;
-    -fx-background-radius: 8px 8px 0 0;
+    -fx-background-radius: 4px 4px 0 0;
     -fx-padding: 5px;
 }
 
-.table-view .column-header {
+.table-view .column-header, .table-view .filler {
     -fx-background-color: transparent;
     -fx-size: 40px;
-    -fx-border-width: 0 1px 0 0;
-    -fx-border-color: rgba(255, 255, 255, 0.2);
+    -fx-border-width: 0 1 0 0;
+    -fx-border-color: #2c3e50;
 }
 
 .table-view .column-header .label {
     -fx-text-fill: white;
-    -fx-font-size: 13px;
     -fx-font-weight: bold;
     -fx-padding: 8px;
-    -fx-alignment: center-left;
 }
 
 .table-view .table-cell {
-    -fx-padding: 8px;
+    -fx-padding: 10px;
     -fx-text-fill: #2c3e50;
-    -fx-font-size: 13px;
     -fx-alignment: center-left;
+    -fx-font-size: 13px;
 }
 
 .table-row-cell {
     -fx-background-color: white;
     -fx-border-color: #ecf0f1;
     -fx-border-width: 0 0 1 0;
-    -fx-cell-size: 40px;
+    -fx-cell-size: 45px;
 }
 
 .table-row-cell:odd {
@@ -127,20 +114,6 @@
 
 .table-row-cell:hover {
     -fx-background-color: #edf7fd;
-}
-
-/* Action column button styling */
-.action-button {
-    -fx-background-color: #e74c3c;
-    -fx-text-fill: white;
-    -fx-padding: 4px 8px;
-    -fx-background-radius: 3px;
-    -fx-cursor: hand;
-    -fx-font-size: 12px;
-}
-
-.action-button:hover {
-    -fx-background-color: #c0392b;
 }
 
 /* ScrollBar styling */
@@ -166,12 +139,13 @@
     -fx-border-color: transparent;
 }
 
-/* Empty table placeholder styling */
-.table-view .placeholder {
-    -fx-background-color: white;
+/* Focus styling */
+.focused {
+    -fx-focus-color: #3498db;
+    -fx-faint-focus-color: #3498db22;
 }
 
-.table-view .placeholder .label {
-    -fx-text-fill: #95a5a6;
-    -fx-font-size: 14px;
+/* Selection highlight */
+.table-row-cell:filled:selected {
+    -fx-background-color: #3498db33;
 }

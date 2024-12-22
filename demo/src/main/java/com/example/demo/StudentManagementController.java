@@ -153,6 +153,8 @@ public class StudentManagementController {
 
         // Create a new stage and show the FXML
         Stage stage = new Stage();
+        stage.setMinHeight(517);
+        stage.setMinWidth(401);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Select a Course to Remove Please!");
         stage.setScene(new Scene(root));
@@ -176,6 +178,8 @@ public class StudentManagementController {
 
         // Create a new stage and show the FXML
         Stage stage = new Stage();
+        stage.setMinWidth(600);
+        stage.setMinHeight(600);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Select a Enrolled Course and a Desired Course to Execute the Transfer Please!");
         stage.setScene(new Scene(root));

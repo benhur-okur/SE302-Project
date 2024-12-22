@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.ViewCoursesController">
+<GridPane prefHeight="429.0" prefWidth="1024.0" stylesheets="@ViewCoursesStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.ViewCoursesController">
     <columnConstraints>
         <ColumnConstraints hgrow="ALWAYS" />
         <ColumnConstraints hgrow="ALWAYS" />
@@ -35,11 +35,11 @@
         <columns>
             <TableColumn fx:id="courseID" prefWidth="150" text="Course ID" />
             <TableColumn fx:id="timeToStart" prefWidth="150" text="Time To Start" />
-            <TableColumn fx:id="duration" prefWidth="150" text="Duration" />
-            <TableColumn fx:id="assignedClassroom" prefWidth="151.0" text="Assigned Classroom" />
-            <TableColumn fx:id="lecturerName" prefWidth="134.0" text="Lecturer Name" />
-            <TableColumn fx:id="viewStudentsColumn" prefWidth="116.0" text="View Students" />
-            <TableColumn fx:id="changeClassroom" prefWidth="132.0" text="Change Classroom" />
+            <TableColumn fx:id="duration" prefWidth="74.0" text="Duration" />
+            <TableColumn fx:id="assignedClassroom" prefWidth="138.0" text="Assigned Classroom" />
+            <TableColumn fx:id="lecturerName" prefWidth="138.0" text="Lecturer Name" />
+            <TableColumn fx:id="viewStudentsColumn" prefWidth="173.0" text="View Students" />
+            <TableColumn fx:id="changeClassroom" prefWidth="198.0" text="Change Classroom" />
         </columns>
     </TableView>
 </GridPane>

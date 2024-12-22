@@ -1,98 +1,177 @@
-/* Genel arka plan */
+/* Root and container styling */
 .root {
-    -fx-background-color: linear-gradient(to bottom, #1a1f36, #273a54); /* Lacivert ve mavi tonları */
+    -fx-background-color: #f5f7fa;
+    -fx-font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
 }
 
-/* VBox içinde hizalanan TableView ve diğer öğeler */
-VBox {
+.stack-pane {
+    -fx-background-color: transparent;
+}
+
+.v-box {
+    -fx-padding: 20px;
     -fx-alignment: center;
-    -fx-spacing: 20px;
 }
 
-/* TableView Stilleri */
-.table-view {
-    -fx-background-color: #1e2a38; /* Daha koyu lacivert */
-    -fx-border-color: #2a3f50; /* Koyu mavi çerçeve */
-    -fx-border-width: 2px;
-    -fx-table-cell-border-color: #2f4557;
+/* Search section styling */
+.h-box {
     -fx-padding: 10px;
-    -fx-max-width: 600px; /* Maksimum genişlik */
-    -fx-max-height: 400px; /* Maksimum yükseklik */
-}
-
-/* Sütun başlıkları */
-.table-view .column-header-background {
-    -fx-background-color: #2e6045; /* Koyu yeşil tonları */
-}
-
-.table-view .column-header {
-    -fx-font-size: 14px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #ffffff; /* Beyaz yazı */
-    -fx-alignment: CENTER;
-}
-
-/* Tablo satırları */
-.table-row-cell {
-    -fx-background-color: #273a54; /* Hafif mavi tonları */
-    -fx-text-fill: #e0e6ed; /* Açık gri yazı */
-    -fx-border-color: #2f4557; /* Koyu mavi sınır */
-}
-
-.table-row-cell:odd {
-    -fx-background-color: #1f2e43; /* Alternatif satır için daha koyu mavi */
-}
-
-.table-row-cell:selected {
-    -fx-background-color: #3b5b47; /* Seçili satır için koyu yeşil */
-    -fx-text-fill: #ffffff; /* Beyaz yazı */
-}
-
-/* TableView hücre yazıları */
-.table-cell {
-    -fx-font-size: 13px;
-    -fx-text-fill: #e0e6ed; /* Hafif açık gri yazı */
-    -fx-padding: 5px;
-}
-
-/* Scrollbar Stilleri */
-.scroll-bar {
-    -fx-background-color: #1a1f36; /* Lacivert */
-}
-
-.scroll-bar .thumb {
-    -fx-background-color: #2e6045; /* Koyu yeşil */
-    -fx-background-insets: 2;
-    -fx-background-radius: 5px;
-}
-
-/* HBox içinde arama alanı ve düğmeler */
-HBox {
     -fx-spacing: 10px;
     -fx-alignment: center;
+    -fx-background-color: white;
+    -fx-background-radius: 8px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 4, 0, 0, 2);
 }
 
 .text-field {
-    -fx-background-color: #1e2a38;
-    -fx-text-fill: #e0e6ed;
-    -fx-border-color: #2a3f50;
-    -fx-border-width: 2px;
-    -fx-prompt-text-fill: #7a869a; /* Placeholder için hafif gri */
+    -fx-background-color: #f8f9fa;
+    -fx-background-radius: 4px;
+    -fx-border-color: #e1e8ed;
+    -fx-border-radius: 4px;
+    -fx-padding: 8px 12px;
+    -fx-font-size: 13px;
 }
 
+.text-field:focused {
+    -fx-border-color: #3498db;
+    -fx-background-color: white;
+}
+
+.text-field .prompt-text {
+    -fx-text-fill: #95a5a6;
+}
+
+/* Button styling */
 .button {
-    -fx-background-color: #2e6045; /* Koyu yeşil */
-    -fx-text-fill: #ffffff; /* Beyaz yazı */
-    -fx-font-weight: bold;
-    -fx-border-color: #1f2e43;
-    -fx-border-radius: 5px;
-    -fx-padding: 5px 15px;
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+    -fx-padding: 8px 16px;
+    -fx-background-radius: 4px;
+    -fx-cursor: hand;
+    -fx-font-size: 13px;
 }
 
 .button:hover {
-    -fx-background-color: #3b5b47; /* Daha açık yeşil */
+    -fx-background-color: #2980b9;
 }
 
-.button:pressed {
-    -fx-background-color: #1e3c2b; /* Daha koyu yeşil */
+#clearBBtn {
+    -fx-background-color: #95a5a6;
+}
+
+#clearBBtn:hover {
+    -fx-background-color: #7f8c8d;
+}
+
+#searchBtn {
+    -fx-background-color: #27ae60;
+}
+
+#searchBtn:hover {
+    -fx-background-color: #219a52;
+}
+
+/* TableView styling */
+.table-view {
+    -fx-background-color: white;
+    -fx-border-color: #e1e8ed;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-padding: 0;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 4, 0, 0, 2);
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #34495e;
+    -fx-background-radius: 8px 8px 0 0;
+    -fx-padding: 5px;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+    -fx-size: 40px;
+    -fx-border-width: 0 1px 0 0;
+    -fx-border-color: rgba(255, 255, 255, 0.2);
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: white;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-padding: 8px;
+    -fx-alignment: center-left;
+}
+
+.table-view .table-cell {
+    -fx-padding: 8px;
+    -fx-text-fill: #2c3e50;
+    -fx-font-size: 13px;
+    -fx-alignment: center-left;
+}
+
+.table-row-cell {
+    -fx-background-color: white;
+    -fx-border-color: #ecf0f1;
+    -fx-border-width: 0 0 1 0;
+    -fx-cell-size: 40px;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #f9f9f9;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #e8f4f9;
+    -fx-text-fill: #2c3e50;
+}
+
+.table-row-cell:hover {
+    -fx-background-color: #edf7fd;
+}
+
+/* Action column button styling */
+.action-button {
+    -fx-background-color: #e74c3c;
+    -fx-text-fill: white;
+    -fx-padding: 4px 8px;
+    -fx-background-radius: 3px;
+    -fx-cursor: hand;
+    -fx-font-size: 12px;
+}
+
+.action-button:hover {
+    -fx-background-color: #c0392b;
+}
+
+/* ScrollBar styling */
+.scroll-bar:vertical,
+.scroll-bar:horizontal {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar:vertical .thumb,
+.scroll-bar:horizontal .thumb {
+    -fx-background-color: #bdc3c7;
+    -fx-background-radius: 5em;
+}
+
+.scroll-bar:vertical .thumb:hover,
+.scroll-bar:horizontal .thumb:hover {
+    -fx-background-color: #95a5a6;
+}
+
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+/* Empty table placeholder styling */
+.table-view .placeholder {
+    -fx-background-color: white;
+}
+
+.table-view .placeholder .label {
+    -fx-text-fill: #95a5a6;
+    -fx-font-size: 14px;
 }
