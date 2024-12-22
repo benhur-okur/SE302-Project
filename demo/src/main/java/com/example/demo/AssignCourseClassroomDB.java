@@ -176,6 +176,23 @@ public class AssignCourseClassroomDB {
 
         return courseList;
     }
+
+    public static void updateClassroomForCourse(Course course, String newClassroom, ViewCoursesController controller) {
+        String sql = "UPDATE Assign SET classroom_name = ? WHERE course_id = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, newClassroom);
+            pstmt.setString(2, course.getCourseID());
+            pstmt.executeUpdate();
+
+            // Güncellenen kurs bilgilerini yenile
+            controller.setTableView();
+        } catch (SQLException e) {
+            System.out.println("Error updating classroom: " + e.getMessage());
+        }
+    }
+
     /*
     public static ObservableList<Course> getClassroomNamesByCourse(ArrayList<Course> courseList) {
         ArrayList<Classroom> classrooms = new ArrayList<>();
