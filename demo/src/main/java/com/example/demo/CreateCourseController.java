@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import java.sql.*;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 public class CreateCourseController {
 
@@ -80,67 +81,86 @@ public class CreateCourseController {
         String selectedClassroom = classroomListView.getSelectionModel().getSelectedItem();
         Integer selectedDuration = durationListView.getSelectionModel().getSelectedItem();
 
-        // Girdilerin boş olup olmadığını kontrol et
+        // Check for empty inputs
         if (courseName == null || courseName.isEmpty() || selectedLecturer == null
                 || selectedStartTime == null || selectedDays.isEmpty()
                 || selectedClassroom == null || selectedDuration == null) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Invalid Input");
-            alert.setContentText("Please fill in all fields before creating the course.");
-            alert.showAndWait();
+            showAlert(Alert.AlertType.ERROR, "Error", "Invalid Input",
+                    "Please fill in all fields before creating the course.");
             return;
         }
 
-        // Başlangıç ve bitiş saatlerini kontrol et
+        // Check time boundaries
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
         LocalTime startTime = LocalTime.parse(selectedStartTime, formatter);
         LocalTime endTime = startTime.plusHours(selectedDuration);
 
-        // Dersin bitiş saati sınırları aşıyor mu?
-        LocalTime latestEndTime = LocalTime.parse("19:30", formatter);
+        // Check if course ends after allowed time
+        LocalTime latestEndTime = LocalTime.parse("21:20", formatter);
         if (endTime.isAfter(latestEndTime)) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Invalid Time");
-            alert.setContentText("The course end time exceeds the limit of 19:30. Please adjust the start time or duration.");
-            alert.showAndWait();
+            showAlert(Alert.AlertType.ERROR, "Error", "Invalid Time",
+                    "The course end time exceeds the limit of 19:30. Please adjust the start time or duration.");
             return;
         }
 
-        // Gün ve saat bilgisini birleştir
+        // Check for time conflicts in selected classroom
+        for (String selectedDay : selectedDays) {
+            if (!isClassroomAvailable(selectedClassroom, selectedDay, startTime, endTime)) {
+                showAlert(Alert.AlertType.ERROR, "Error", "Time Conflict",
+                        "There is already a course scheduled in " + selectedClassroom +
+                                " on " + selectedDay + " between " + startTime + " and " + endTime);
+                return;
+            }
+        }
+
+        // If no conflicts, create the course
         String timeToStart = selectedDays.get(0) + " " + selectedStartTime;
-
-        // Yeni bir Course nesnesi oluştur
         Course newCourse = new Course(
-                courseName,          // courseID
-                timeToStart,         // timeToStart
-                selectedDuration,    // duration
-                selectedLecturer     // lecturerName
+                courseName,
+                timeToStart,
+                selectedDuration,
+                selectedLecturer
         );
-
-        // Classroom'u ata
         newCourse.setClassroomName(selectedClassroom);
 
-        // Test için log yazdır
-        System.out.println("New Course Created:");
-        System.out.println("Course ID: " + newCourse.getCourseID());
-        System.out.println("Time to Start: " + newCourse.getTimeToStart());
-        System.out.println("Duration: " + newCourse.getDuration() + " hours");
-        System.out.println("Lecturer: " + newCourse.getLecturerName());
-        System.out.println("Classroom: " + newCourse.getClassroomName());
-
-        // Veritabanına kaydet
+        // Save to database
         CourseDataAccessObject.addSingleCourse(newCourse);
         AssignCourseClassroomDB.initializeAssigning(newCourse, selectedClassroom);
 
-        // Tabloları güncelle
+        // Update tables
         viewCoursesController.tableView.refresh();
         viewCoursesController.setTableView();
 
-        // Pencereyi kapat
+        // Close window
         Stage stage = (Stage) courseNameField.getScene().getWindow();
         stage.close();
+    }
+
+    private boolean isClassroomAvailable(String classroom, String day, LocalTime startTime, LocalTime endTime) {
+        // Get all courses in the selected classroom
+        ArrayList<Course> existingCourses = AssignCourseClassroomDB.getCourseNamesByClassroom(classroom);
+
+        for (Course existingCourse : existingCourses) {
+            // Only check courses on the same day
+            if (existingCourse.getCourseDay().equals(day)) {
+                LocalTime existingStartTime = existingCourse.getStartTime();
+                LocalTime existingEndTime = existingCourse.getEndTime();
+
+                // Check for time overlap
+                if (startTime.isBefore(existingEndTime) && endTime.isAfter(existingStartTime)) {
+                    return false; // Conflict found
+                }
+            }
+        }
+        return true; // No conflicts found
+    }
+
+    private void showAlert(Alert.AlertType type, String title, String header, String content) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 
 
