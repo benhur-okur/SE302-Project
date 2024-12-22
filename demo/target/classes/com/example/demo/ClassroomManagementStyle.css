@@ -1,109 +1,47 @@
-/* Root and container styling */
+/* Root styling */
 .root {
     -fx-background-color: #f5f7fa;
     -fx-font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
 }
 
-.stack-pane {
+/* AnchorPane styling */
+.anchor-pane {
     -fx-background-color: transparent;
-}
-
-.v-box {
-    -fx-padding: 20px;
-    -fx-alignment: center;
-}
-
-/* Search section styling */
-.h-box {
     -fx-padding: 10px;
-    -fx-spacing: 10px;
-    -fx-alignment: center;
-    -fx-background-color: white;
-    -fx-background-radius: 8px;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 4, 0, 0, 2);
-}
-
-.text-field {
-    -fx-background-color: #f8f9fa;
-    -fx-background-radius: 4px;
-    -fx-border-color: #e1e8ed;
-    -fx-border-radius: 4px;
-    -fx-padding: 8px 12px;
-    -fx-font-size: 13px;
-}
-
-.text-field:focused {
-    -fx-border-color: #3498db;
-    -fx-background-color: white;
-}
-
-.text-field .prompt-text {
-    -fx-text-fill: #95a5a6;
-}
-
-/* Button styling */
-.button {
-    -fx-background-color: #3498db;
-    -fx-text-fill: white;
-    -fx-padding: 8px 16px;
-    -fx-background-radius: 4px;
-    -fx-cursor: hand;
-    -fx-font-size: 13px;
-}
-
-.button:hover {
-    -fx-background-color: #2980b9;
-}
-
-#clearBBtn {
-    -fx-background-color: #95a5a6;
-}
-
-#clearBBtn:hover {
-    -fx-background-color: #7f8c8d;
-}
-
-#searchBtn {
-    -fx-background-color: #27ae60;
-}
-
-#searchBtn:hover {
-    -fx-background-color: #219a52;
 }
 
 /* TableView styling */
 .table-view {
     -fx-background-color: white;
+    -fx-background-radius: 8px;
     -fx-border-color: #e1e8ed;
     -fx-border-radius: 8px;
-    -fx-background-radius: 8px;
-    -fx-padding: 0;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 4, 0, 0, 2);
+    -fx-padding: 0;
 }
 
 .table-view .column-header-background {
     -fx-background-color: #34495e;
     -fx-background-radius: 8px 8px 0 0;
-    -fx-padding: 5px;
+    -fx-background-insets: 0;
+    -fx-padding: 8px 0;
 }
 
 .table-view .column-header {
     -fx-background-color: transparent;
-    -fx-size: 40px;
-    -fx-border-width: 0 1px 0 0;
-    -fx-border-color: rgba(255, 255, 255, 0.2);
+    -fx-size: 45px;
 }
 
 .table-view .column-header .label {
     -fx-text-fill: white;
-    -fx-font-size: 13px;
+    -fx-font-size: 14px;
     -fx-font-weight: bold;
-    -fx-padding: 8px;
+    -fx-padding: 10px 15px;
     -fx-alignment: center-left;
 }
 
 .table-view .table-cell {
-    -fx-padding: 8px;
+    -fx-padding: 12px 15px;
     -fx-text-fill: #2c3e50;
     -fx-font-size: 13px;
     -fx-alignment: center-left;
@@ -113,7 +51,7 @@
     -fx-background-color: white;
     -fx-border-color: #ecf0f1;
     -fx-border-width: 0 0 1 0;
-    -fx-cell-size: 40px;
+    -fx-cell-size: 45px;
 }
 
 .table-row-cell:odd {
@@ -131,16 +69,33 @@
 
 /* Action column button styling */
 .action-button {
-    -fx-background-color: #e74c3c;
+    -fx-background-color: #3498db;
     -fx-text-fill: white;
-    -fx-padding: 4px 8px;
-    -fx-background-radius: 3px;
+    -fx-padding: 6px 12px;
+    -fx-background-radius: 4px;
     -fx-cursor: hand;
     -fx-font-size: 12px;
+    -fx-min-width: 70px;
 }
 
 .action-button:hover {
+    -fx-background-color: #2980b9;
+}
+
+.delete-button {
+    -fx-background-color: #e74c3c;
+}
+
+.delete-button:hover {
     -fx-background-color: #c0392b;
+}
+
+.edit-button {
+    -fx-background-color: #f1c40f;
+}
+
+.edit-button:hover {
+    -fx-background-color: #f39c12;
 }
 
 /* ScrollBar styling */
@@ -174,4 +129,17 @@
 .table-view .placeholder .label {
     -fx-text-fill: #95a5a6;
     -fx-font-size: 14px;
+}
+
+/* Column specific styling */
+#classroomColumn {
+    -fx-alignment: center-left;
+}
+
+#capacityColumn {
+    -fx-alignment: center;
+}
+
+#actionColumn {
+    -fx-alignment: center;
 }

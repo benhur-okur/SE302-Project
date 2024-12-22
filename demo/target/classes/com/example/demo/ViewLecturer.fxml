@@ -4,7 +4,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="459.0" prefWidth="514.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.ViewLecturersController">
+<AnchorPane prefHeight="459.0" prefWidth="514.0" stylesheets="@LecturerTableStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.ViewLecturersController">
      <TableView fx:id="lecturerTableView" layoutX="-2.0" prefHeight="459.0" prefWidth="514.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <columns>
              <TableColumn fx:id="lecturerNameColumn" prefWidth="264.79996943473816" text="Lecturer Name" />

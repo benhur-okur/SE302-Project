@@ -1,0 +1,188 @@
+/* Main colors */
+.root {
+    -fx-background-color: #f5f7fa;
+    -fx-font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+/* AnchorPane styling */
+.anchor-pane {
+    -fx-background-color: transparent;
+    -fx-padding: 10px;
+}
+
+/* Label styling */
+.label {
+    -fx-text-fill: #2c3e50;
+}
+
+#studentNameLabel {
+    -fx-background-color: #34495e;
+    -fx-text-fill: white;
+    -fx-padding: 10px;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 4, 0, 0, 0);
+}
+
+/* Button styling */
+.button {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+    -fx-padding: 8px 15px;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-font-size: 13px;
+    -fx-cursor: hand;
+    -fx-min-width: 100px;
+}
+
+.button:hover {
+    -fx-background-color: #2980b9;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 4, 0, 0, 0);
+}
+
+.button:pressed {
+    -fx-background-color: #2472a4;
+}
+
+#addStudentButton {
+    -fx-background-color: #27ae60;
+}
+
+#addStudentButton:hover {
+    -fx-background-color: #219a52;
+}
+
+#removeStudentButton {
+    -fx-background-color: #e74c3c;
+}
+
+#removeStudentButton:hover {
+    -fx-background-color: #c0392b;
+}
+
+#transferStudentButton {
+    -fx-background-color: #f39c12;
+}
+
+#transferStudentButton:hover {
+    -fx-background-color: #d35400;
+}
+
+#refreshButton {
+    -fx-background-color: #95a5a6;
+}
+
+#refreshButton:hover {
+    -fx-background-color: #7f8c8d;
+}
+
+/* GridPane (Schedule) styling */
+.grid-pane {
+    -fx-background-color: white;
+    -fx-border-color: #bdc3c7;
+    -fx-grid-lines-visible: true;
+}
+
+.grid-pane .label {
+    -fx-padding: 5px;
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+}
+
+.grid-pane .column-header {
+    -fx-background-color: #34495e;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 8px;
+}
+
+/* Schedule cell styling */
+.schedule-cell {
+    -fx-background-color: white;
+    -fx-border-color: #ecf0f1;
+    -fx-padding: 5px;
+    -fx-alignment: center;
+}
+
+.schedule-cell:empty {
+    -fx-background-color: #f8f9fa;
+}
+
+.schedule-cell.course {
+    -fx-background-color: #e8f4f9;
+    -fx-border-color: #3498db;
+    -fx-border-width: 0 0 2 0;
+}
+
+/* TableView styling */
+.table-view {
+    -fx-background-color: transparent;
+    -fx-border-color: #e1e8ed;
+    -fx-border-radius: 4px;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #34495e;
+    -fx-background-radius: 4px 4px 0 0;
+    -fx-padding: 5px;
+}
+
+.table-view .column-header, .table-view .filler {
+    -fx-background-color: transparent;
+    -fx-size: 40px;
+    -fx-border-width: 0;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.table-view .table-cell {
+    -fx-padding: 8px;
+    -fx-text-fill: #2c3e50;
+    -fx-alignment: center-left;
+}
+
+.table-row-cell {
+    -fx-background-color: white;
+    -fx-border-color: #ecf0f1;
+    -fx-border-width: 0 0 1 0;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #f9f9f9;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #e8f4f9;
+    -fx-text-fill: #2c3e50;
+}
+
+.table-row-cell:hover {
+    -fx-background-color: #edf7fd;
+}
+
+/* ScrollBar styling */
+.scroll-bar:vertical,
+.scroll-bar:horizontal {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar:vertical .thumb,
+.scroll-bar:horizontal .thumb {
+    -fx-background-color: #bdc3c7;
+    -fx-background-radius: 5em;
+}
+
+.scroll-bar:vertical .thumb:hover,
+.scroll-bar:horizontal .thumb:hover {
+    -fx-background-color: #95a5a6;
+}
+
+/* Focus styling */
+.focused {
+    -fx-focus-color: #3498db;
+    -fx-faint-focus-color: #3498db22;
+}

@@ -1,0 +1,72 @@
+/* Main colors */
+.root {
+    -fx-background-color: #f5f7fa;
+    -fx-font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+/* Labels */
+.label {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+/* TextField */
+.text-field {
+    -fx-background-color: white;
+    -fx-border-color: #e1e8ed;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-padding: 5px 10px;
+    -fx-font-size: 13px;
+}
+
+.text-field:focused {
+    -fx-border-color: #3498db;
+    -fx-background-color: white;
+}
+
+/* Buttons */
+.button {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+    -fx-padding: 5px 15px;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-font-size: 13px;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: #2980b9;
+}
+
+/* Cancel button */
+.button:focused {
+    -fx-background-color: #95a5a6;
+}
+
+/* ListView */
+.list-view {
+    -fx-background-color: white;
+    -fx-border-color: #e1e8ed;
+    -fx-border-radius: 4px;
+    -fx-padding: 5px;
+}
+
+.list-view .list-cell {
+    -fx-text-fill: #2c3e50;
+    -fx-padding: 5px 10px;
+}
+
+.list-view .list-cell:focused {
+    -fx-background-color: #e8f4f9;
+}
+
+.list-view .list-cell:hover {
+    -fx-background-color: #edf7fd;
+}
+
+/* AnchorPane */
+.anchor-pane {
+    -fx-padding: 20px;
+}
