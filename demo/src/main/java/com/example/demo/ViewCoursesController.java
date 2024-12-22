@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import java.sql.*;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -125,7 +126,7 @@ public class ViewCoursesController {
                 return new TableCell<>() {
                     private final ChoiceBox<String> choiceBox = new ChoiceBox<>();
                     private final Button btn = new Button("Change");
-                    private final HBox container = new HBox(10); // ChoiceBox ve Button için bir konteyner
+                    private final HBox container = new HBox(10);
 
                     {
                         // Classroom'ları ChoiceBox'a ekle
@@ -135,12 +136,41 @@ public class ViewCoursesController {
                         btn.setOnAction(event -> {
                             Course selectedCourse = getTableView().getItems().get(getIndex());
                             String selectedClassroom = choiceBox.getValue();
+
                             if (selectedClassroom != null) {
-                                AssignCourseClassroomDB.updateClassroomForCourse(selectedCourse, selectedClassroom, viewCoursesController);
+                                // Sınıfın müsaitlik kontrolü
+                                ArrayList<Course> classroomCourses = AssignCourseClassroomDB.getCourseNamesByClassroom(selectedClassroom);
+                                boolean isAvailable = true;
+
+                                for (Course existingCourse : classroomCourses) {
+                                    if (existingCourse.getCourseDay().equals(selectedCourse.getCourseDay())) {
+                                        LocalTime newCourseStart = selectedCourse.getStartTime();
+                                        LocalTime newCourseEnd = selectedCourse.getEndTime(newCourseStart);
+                                        LocalTime existingCourseStart = existingCourse.getStartTime();
+                                        LocalTime existingCourseEnd = existingCourse.getEndTime(existingCourseStart);
+
+                                        // Zaman çakışması kontrolü
+                                        if (newCourseStart.isBefore(existingCourseEnd) &&
+                                                newCourseEnd.isAfter(existingCourseStart)) {
+                                            isAvailable = false;
+                                            break;
+                                        }
+                                    }
+                                }
+
+                                if (isAvailable) {
+                                    AssignCourseClassroomDB.updateClassroomForCourse(selectedCourse, selectedClassroom, viewCoursesController);
+                                } else {
+                                    // Kullanıcıya uyarı göster
+                                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                                    alert.setTitle("Classroom Not Available");
+                                    alert.setHeaderText("Time Conflict");
+                                    alert.setContentText("The selected classroom is not available at this time slot due to another course.");
+                                    alert.showAndWait();
+                                }
                             }
                         });
 
-                        // HBox içine ChoiceBox ve Button ekle
                         container.getChildren().addAll(choiceBox, btn);
                     }
 
@@ -148,16 +178,16 @@ public class ViewCoursesController {
                     protected void updateItem(Void item, boolean empty) {
                         super.updateItem(item, empty);
                         if (empty) {
-                            setGraphic(null); // Hücre boşsa hiçbir şey gösterme
+                            setGraphic(null);
                         } else {
-                            setGraphic(container); // Hücre doluysa ChoiceBox ve Button'ı göster
+                            setGraphic(container);
                         }
                     }
                 };
             }
         };
 
-        changeClassroom.setCellFactory(cellFactory); // "Change Classroom" sütununu güncelle
+        changeClassroom.setCellFactory(cellFactory);
     }
 
 
