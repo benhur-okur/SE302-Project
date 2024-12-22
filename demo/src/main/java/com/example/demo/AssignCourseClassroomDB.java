@@ -62,6 +62,32 @@ public class AssignCourseClassroomDB {
             throw new RuntimeException("Insertion error: " + e.getMessage(), e);
         }
     }
+    public static Classroom getClassroomNameByCourseId(Course course) {
+        String classroomName = null;
+        String courseId = course.getCourseID();
+
+        String query = "SELECT classroom_name FROM Assign WHERE course_id = ?";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+
+            // Parametreyi hazırlıyoruz
+            preparedStatement.setString(1, courseId);
+
+            // Sorguyu çalıştır ve sonucu al
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    classroomName = resultSet.getString("classroom_name");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        int capacity = ClassroomDataAccessObject.getCapacityWhereClassroomIs(classroomName);
+        return new Classroom(classroomName, capacity);
+    }
+
     public static ArrayList<Course> getCourseNamesByClassroom(String classroomName) {
         ArrayList<String> courseList = new ArrayList<>();
 

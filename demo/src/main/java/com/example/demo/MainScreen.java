@@ -62,7 +62,9 @@ public class MainScreen extends Application {
         for (Course course : courseList) {
             //System.out.println(course.getCourseID() + " " + course.getEnrolledStudentsList().size());
             System.out.println(course + " " + course.getCourseID() + " " + AttendenceDatabase.studentsOfSpecificCourse(course).size());
-            course.assignClassroom(classroomsList);
+            course.setAssignedClassroom(AssignCourseClassroomDB.getClassroomNameByCourseId(course));
+            course.setClassroomName(course.getAssignedClassroom().getClassroomName());
+            //course.assignClassroom(classroomsList);
             System.out.println(course.getAssignedClassroom().getClassroomName());
         }
     }
