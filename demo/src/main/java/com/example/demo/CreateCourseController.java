@@ -92,6 +92,22 @@ public class CreateCourseController {
             return;
         }
 
+        // Başlangıç ve bitiş saatlerini kontrol et
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        LocalTime startTime = LocalTime.parse(selectedStartTime, formatter);
+        LocalTime endTime = startTime.plusHours(selectedDuration);
+
+        // Dersin bitiş saati sınırları aşıyor mu?
+        LocalTime latestEndTime = LocalTime.parse("19:30", formatter);
+        if (endTime.isAfter(latestEndTime)) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Invalid Time");
+            alert.setContentText("The course end time exceeds the limit of 19:30. Please adjust the start time or duration.");
+            alert.showAndWait();
+            return;
+        }
+
         // Gün ve saat bilgisini birleştir
         String timeToStart = selectedDays.get(0) + " " + selectedStartTime;
 
@@ -103,15 +119,7 @@ public class CreateCourseController {
                 selectedLecturer     // lecturerName
         );
 
-        /*
-        if (!isAvailable(newCourse)) {
-            System.out.println("Schedule is not suitable or this course");
-            return;
-        }
-
-         */
-
-        // Classroom'u ata (varsayılan olarak sadece ismi kaydediyoruz)
+        // Classroom'u ata
         newCourse.setClassroomName(selectedClassroom);
 
         // Test için log yazdır
@@ -122,16 +130,19 @@ public class CreateCourseController {
         System.out.println("Lecturer: " + newCourse.getLecturerName());
         System.out.println("Classroom: " + newCourse.getClassroomName());
 
+        // Veritabanına kaydet
         CourseDataAccessObject.addSingleCourse(newCourse);
-        //AttendenceDatabase.addAttendancesForNewCourse(newCourse);
-        AssignCourseClassroomDB.initializeAssigning(newCourse,selectedClassroom );
+        AssignCourseClassroomDB.initializeAssigning(newCourse, selectedClassroom);
 
+        // Tabloları güncelle
         viewCoursesController.tableView.refresh();
         viewCoursesController.setTableView();
 
+        // Pencereyi kapat
         Stage stage = (Stage) courseNameField.getScene().getWindow();
         stage.close();
     }
+
 
     @FXML
     private void handleCancel() {
