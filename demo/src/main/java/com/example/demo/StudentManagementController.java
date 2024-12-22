@@ -70,7 +70,7 @@ public class StudentManagementController {
 
         addStudentButton.setOnAction(event -> OpenViewCoursesAdd());
 
-        removeStudentButton.setOnAction(event -> handleRemoveStudentFromCourse());
+        removeStudentButton.setOnAction(event -> OpenViewCoursesRemove());
 
         transferStudentButton.setOnAction(event -> OpenViewCoursesTransfer());
 
@@ -124,7 +124,7 @@ public class StudentManagementController {
 
     @FXML
     private void OpenViewCoursesAdd() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ViewCourses.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("EnrollCourseScreen.fxml"));
         Parent root = null;
         try {
             root = fxmlLoader.load();
@@ -132,14 +132,34 @@ public class StudentManagementController {
             throw new RuntimeException(e);
         }
 
-        // Pass the action type to the ViewCoursesController
-        ViewCoursesController controller = fxmlLoader.getController();
-        ViewCoursesController.selectedStudent = student;
+        // Pass the selected student to the new controller
+        EnrollCourseScreenController.selectedStudent = student;
 
         // Create a new stage and show the FXML
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Select a Course to Add Please!");
+        stage.setScene(new Scene(root));
+        stage.showAndWait();
+    }
+
+    @FXML
+    private void OpenViewCoursesRemove() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CourseTableView.fxml"));
+        Parent root = null;
+        try {
+            root = fxmlLoader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        CourseTableViewController courseTableController = fxmlLoader.getController();
+        courseTableController.setStudent(student);  // Pass the student to the controller
+
+        // Create a new stage and show the FXML
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Select a Course to Remove Please!");
         stage.setScene(new Scene(root));
         stage.showAndWait();
     }
@@ -184,40 +204,15 @@ public class StudentManagementController {
     }
 
     @FXML
-    private void handleRemoveStudentFromCourse() {
-        // Open the CourseTableView page
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CourseTableView.fxml"));
-        Parent root = null;
-        try {
-            root = fxmlLoader.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        // Get the CourseTableViewController instance and pass the student
-        CourseTableViewController courseTableController = fxmlLoader.getController();
-        courseTableController.setStudent(student);  // Pass the student to the controller
-
-        // Create and show the new stage with the CourseTableView
-        Stage stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle("Select a Course to Remove Please!");
-        stage.setScene(new Scene(root));
-        stage.showAndWait();
-
-        // Get the selected course from the CourseTableViewController
-        Course selectedCourse = courseTableController.getSelectedCourse();
-
+    public void handleRemoveStudentFromCourse(Course selectedCourse) {
         if (selectedCourse != null && student != null) {
-            // Admin class instance to manage course enrollment
+            // Use the Admin class to add the student to the selected course
             Admin admin = new Admin();
-
-            // Remove the student from the selected course
             admin.removeStudentFromCourse(selectedCourse, student);
 
             // Reload the courses to reflect the changes in the TableView
             loadCourses();
-            System.out.println("Student removed from the course!");
+            System.out.println("Student added to the course!");
         } else {
             System.out.println("Please select a course and ensure a student is selected.");
         }
