@@ -107,6 +107,7 @@ public class ViewCoursesController {
         stage.showAndWait();
     }
     public void setTableView () {
+
         ObservableList<Course> hypotethicalCourses = CourseDataAccessObject.getCoursesWithoutStudents();
         allCourses = AssignCourseClassroomDB.getCoursesWithAssignedClassrooms(hypotethicalCourses);
         //allCourses = CourseDataAccessObject.getCoursesWithoutStudents();

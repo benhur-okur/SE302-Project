@@ -103,6 +103,14 @@ public class CreateCourseController {
                 selectedLecturer     // lecturerName
         );
 
+        /*
+        if (!isAvailable(newCourse)) {
+            System.out.println("Schedule is not suitable or this course");
+            return;
+        }
+
+         */
+
         // Classroom'u ata (varsayılan olarak sadece ismi kaydediyoruz)
         newCourse.setClassroomName(selectedClassroom);
 
@@ -117,9 +125,8 @@ public class CreateCourseController {
         CourseDataAccessObject.addSingleCourse(newCourse);
         //AttendenceDatabase.addAttendancesForNewCourse(newCourse);
         AssignCourseClassroomDB.initializeAssigning(newCourse,selectedClassroom );
-        
 
-        // Pencereyi kapat
+        viewCoursesController.tableView.refresh();
         viewCoursesController.setTableView();
 
         Stage stage = (Stage) courseNameField.getScene().getWindow();
@@ -134,5 +141,32 @@ public class CreateCourseController {
 
     public void setMainController(ViewCoursesController viewCoursesController) {
         this.viewCoursesController = viewCoursesController;
+    }
+    public boolean isAvailable(Course newCourse) {
+        // Eğer öğrencinin katıldığı dersler listesi boşsa, öğrenci uygundur.
+
+        for (Course existingCourse : MainScreen.courseList) {
+            LocalTime existingStartTime = existingCourse.getStartTime();
+            System.out.println(existingStartTime);
+            LocalTime existingEndTime = existingCourse.getEndTime();
+            System.out.println(existingEndTime);
+            String existingCourseDay = existingCourse.getCourseDay();
+            System.out.println(existingCourseDay);
+            String newCourseDay = newCourse.getCourseDay();
+            System.out.println(newCourseDay);
+            LocalTime newStartTime = newCourse.getStartTime();
+            System.out.println(newStartTime);
+            LocalTime newEndTime = newCourse.getEndTime();
+            System.out.println(newEndTime);
+
+            // Aynı gün olup olmadığını kontrol et
+            if (existingCourseDay.equals(newCourseDay)) {
+                // Zamanların çakışıp çakışmadığını kontrol et
+                if (newStartTime.isBefore(existingEndTime) && newEndTime.isAfter(existingStartTime)) {
+                    return false; // Çakışma var, öğrenci bu derse katılamaz
+                }
+            }
+        }
+        return true; // Çakışma yok, öğrenci derse katılabilir
     }
 }
