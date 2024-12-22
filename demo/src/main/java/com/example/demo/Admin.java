@@ -115,59 +115,7 @@ public class Admin {
         }
     }
 
-
-
-
     //TODO: COURSENUN CLASSROOMU, COURSEUN STUDENT LİSTİ, CLASSROOMUN CAPACİTYSİ,
-    public void changeClassroom(Course course, Classroom newClassroom) {
-        Classroom currentClassroom = course.getAssignedClassroom();
-        int studentCount = course.getEnrolledStudentsList().size();
-        // Check if the new classroom is available and has enough capacity
-        if (!newClassroom.isAvailable(course.getCourseDay(), course.getStartTime(), course.getEndTime())) {
-            System.out.println("The new classroom is not available during the course time.");
-            return;
-        }
-        if (newClassroom.getCapacity() < studentCount) {
-            System.out.println("The new classroom doesn't have enough capacity for the course.");
-            return;
-        }
-
-        if (currentClassroom != null) {
-            currentClassroom.getCourses().remove(course);
-        }
-
-        course.setAssignedClassroom(newClassroom);
-        newClassroom.getCourses().add(course);
-        System.out.println("Classroom changed to: " + newClassroom.getClassroomName());
-        //TODO SQL UPDATE
-    }
 
 
-    public void markAttendanceForStudent(Student student, Course course, boolean isPresent) {
-        // Öğrencinin o derse ait devamsızlık kaydını işaretle
-        student.markAttendanceForCourse(course, isPresent);
-
-        if (!isPresent) {
-            System.out.println("Student " + student.getName() + " has been marked absent for course " + course.getCourseID());
-        } else {
-            System.out.println("Student " + student.getName() + " is present in course " + course.getCourseID());
-        }
-        //TODO sql update - SANIRIM DOLAYLI YOLDAN ÇÖZÜLDÜ KULLANDIGI METHOT SQL UPDATE YAPTIGI İÇİN - BENHUR
-    }
-
-    public void viewStudentAbsenteeism(Student student, Course course) throws SQLException {
-        // Öğrencinin o dersteki devamsızlık sayısını al
-        int absenteeismCount = student.getAbsenceCountForCourse(course);
-        System.out.println("Student " + student.getName() + " has " + absenteeismCount + " absences in course " + course.getCourseID());
-    }
-    //TODO SQL getAttendence - SOLVED - BENHUR
-
-    //TODO viewStudentAbsenteeism methodunu kullansak daha iyi olmaz mı ilayda?
-    public void viewAllAbsenteeismForStudent2(Student student) throws SQLException {
-        System.out.println("Absenteeism details for student: " + student.getName());
-        for (Course course : student.getCourses()) {
-           viewStudentAbsenteeism(student,course);
-        }
-        //TODO SQL spesifik öğrenci için devamsılık göstercek - BU VE ALTTAKİ METHODLAR İÇİN SQL UPDATE YAPMADIM NO USAGE GÖSTERİYO ÇÜNKÜ KULLANILICAKSA BBUNLAR LÜTFEN HABER EDİN YAPARIM
-    }
 }
