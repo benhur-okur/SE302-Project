@@ -2,15 +2,15 @@
 
 Welcome to the Syllabus Manager Wiki! This system optimizes course scheduling, classroom assignments, and attendance tracking for academic institutions.
 
-## Overview
+# Overview
 
 Syllabus Manager is a standalone Windows desktop application designed to handle up to 25,000 student records efficiently. It provides separate interfaces for administrators, lecturers, and students, all while maintaining data in a SQLite database.
 
-## Prerequisites
+# Prerequisites
 Operating system: Windows
 Ensure you have Java Runtime Environment (JRE) installed (version 8 or higher). Download JRE here.
 
-## Features and Usages
+# Features and Usages
 
 Data import: The system imports data automatically. The imported courses are processed and assigned classrooms to each automatically.
 
@@ -28,7 +28,7 @@ Attendance Management: Users can increment the absence count for courses of a sp
 
 Search and Refresh: Quickly refresh schedules and search for specific data.
 
-## User Interface
+# User Interface
 ## Course Management Panel
 ![image](https://github.com/user-attachments/assets/c981adec-e8ab-44cf-ae10-dd1d870632b9)
 ![image](https://github.com/user-attachments/assets/bf692e16-d8f4-4619-8d1a-0a24ae0175aa)
