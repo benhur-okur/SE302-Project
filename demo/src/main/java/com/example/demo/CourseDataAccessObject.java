@@ -14,7 +14,7 @@ public class CourseDataAccessObject {
     public static void createTable() {
 
 
-
+/*
         String sql2 = "DROP TABLE IF EXISTS Course";
         try (Connection conn = DatabaseConnection.getConnection();
              Statement stmt = conn.createStatement()) {
@@ -24,6 +24,7 @@ public class CourseDataAccessObject {
             System.out.println("Creating table error: " + e.getMessage());
         }
 
+ */
 
 
 

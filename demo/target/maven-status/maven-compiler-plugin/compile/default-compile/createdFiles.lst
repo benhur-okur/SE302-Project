@@ -1,4 +1,3 @@
-com\example\demo\EbruTest.class
 com\example\demo\Student.class
 com\example\demo\AttendanceStudents.class
 com\example\demo\StudentsController$1$1.class
@@ -8,7 +7,6 @@ com\example\demo\ViewCoursesController$1.class
 com\example\demo\ViewCoursesController.class
 com\example\demo\AttendanceManagementController.class
 com\example\demo\ViewLecturersController$1.class
-com\example\demo\İlaydaTest.class
 com\example\demo\Attendance.class
 com\example\demo\StudentManagementController.class
 com\example\demo\ClassroomManagementController.class
@@ -28,7 +26,6 @@ com\example\demo\AttendenceDatabase.class
 com\example\demo\CreateCourseController.class
 com\example\demo\ClassroomManagementController$1$1.class
 module-info.class
-com\example\demo\BenhurTest.class
 com\example\demo\ClassroomDataAccessObject.class
 com\example\demo\AssignCourseClassroomDB.class
 com\example\demo\AttendanceManagementController$1.class
@@ -38,7 +35,6 @@ com\example\demo\Admin.class
 com\example\demo\MainScreenController.class
 com\example\demo\ViewCoursesController$2.class
 com\example\demo\ViewLecturersController.class
-com\example\demo\DoaTest.class
 com\example\demo\Person.class
 com\example\demo\ViewLecturersController$1$1.class
 com\example\demo\CSV_Reader.class
