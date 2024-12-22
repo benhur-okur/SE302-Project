@@ -83,7 +83,7 @@ public class EnrollCourseScreenController {
 
                     StudentManagementController studentManagementController = loader.getController();
                     studentManagementController.handleAddToCourse(selectedCourse);
-                    System.out.println(selectedCourse.getStudentNames());
+                    //System.out.println(selectedCourse.getStudentNames());
 
                     Stage stage = (Stage) tableView.getScene().getWindow();
                     stage.close();

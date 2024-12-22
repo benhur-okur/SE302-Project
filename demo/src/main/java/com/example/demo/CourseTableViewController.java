@@ -35,11 +35,10 @@ public class CourseTableViewController {
         CoursesColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCourseID()));
 
         if (student != null) {
-            System.out.println(student);
             loadCourses();
         }
         if (student == null) {
-            System.out.println("student NULL");
+            //System.out.println("student NULL");
         }
 
         courseTableView.setOnMouseClicked(event -> handleCourseSelection());
@@ -64,7 +63,6 @@ public class CourseTableViewController {
     // Set the student object for this controller
     public void setStudent(Student student) {
         this.student = student;  // Assign the student to the class variable
-        System.out.println("Student set: " + student.getName());
         loadCourses();  // Reload courses based on the student
     }
 
