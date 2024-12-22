@@ -10,6 +10,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class AssignCourseClassroomDB {
+    public static void dropTable() {
+        String sql = "DROP TABLE IF EXISTS Assign" ;
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             Statement stmt = conn.createStatement()) {
+            stmt.execute(sql);
+            System.out.println("Assign" + " table has been dropped.");
+        } catch (SQLException e) {
+            System.out.println("Dropping table error: " + e.getMessage());
+        }
+    }
+
     public static void createTables() {
 
         //TODO Duplicate öğrenci probblem var - SOLVED
@@ -19,7 +31,7 @@ public class AssignCourseClassroomDB {
                 classroom_name TEXT NOT NULL,
                 FOREIGN KEY (course_id) REFERENCES Course(Course),
                 FOREIGN KEY (classroom_name) REFERENCES Classroom(Classroom),
-                UNIQUE (course_id, classroom_name)                               \s
+                UNIQUE (course_id)                               \s
                          );
         \s""";
 
@@ -186,8 +198,10 @@ public class AssignCourseClassroomDB {
             pstmt.setString(2, course.getCourseID());
             pstmt.executeUpdate();
 
+            course.setClassroomName(newClassroom);
+
             // Güncellenen kurs bilgilerini yenile
-            controller.setTableView();
+            controller.tableView.refresh();
         } catch (SQLException e) {
             System.out.println("Error updating classroom: " + e.getMessage());
         }

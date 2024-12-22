@@ -8,7 +8,8 @@ public class BenhurTest {
         CSV_Reader csv = new CSV_Reader();
 
 
-
+        AssignCourseClassroomDB.dropTable();
+        AssignCourseClassroomDB.createTables();
 
 
 /*
