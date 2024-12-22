@@ -9,10 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -191,44 +188,86 @@ public class StudentManagementController {
     // Method to handle adding the selected course to the student called from ViewCoursesController after selecting a course
     public void handleAddToCourse(Course selectedCourse) {
         if (selectedCourse != null && student != null) {
-            // Use the Admin class to add the student to the selected course
             Admin admin = new Admin();
-            admin.addStudentToCourse(selectedCourse, student);
+            String result = admin.addStudentToCourse(selectedCourse, student);
 
-            // Reload the courses to reflect the changes in the TableView
-            loadCourses();
-            System.out.println("Student added to the course!");
+            if (result.equals("SUCCESS")) {
+                loadCourses();
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Success");
+                alert.setHeaderText(null);
+                alert.setContentText("Student successfully added to the course!");
+                alert.showAndWait();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText(result.replace("ERROR: ", ""));
+                alert.showAndWait();
+            }
         } else {
-            System.out.println("Please select a course and ensure a student is selected.");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Please select a course and ensure a student is selected.");
+            alert.showAndWait();
         }
     }
 
     @FXML
     public void handleRemoveStudentFromCourse(Course selectedCourse) {
         if (selectedCourse != null && student != null) {
-            // Use the Admin class to add the student to the selected course
             Admin admin = new Admin();
-            admin.removeStudentFromCourse(selectedCourse, student);
+            String result = admin.removeStudentFromCourse(selectedCourse, student);
 
-            // Reload the courses to reflect the changes in the TableView
-            loadCourses();
-            System.out.println("Student added to the course!");
+            if (result.equals("SUCCESS")) {
+                loadCourses();
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Success");
+                alert.setHeaderText(null);
+                alert.setContentText("Student successfully removed from the course!");
+                alert.showAndWait();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText(result.replace("ERROR: ", ""));
+                alert.showAndWait();
+            }
         } else {
-            System.out.println("Please select a course and ensure a student is selected.");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Please select a course and ensure a student is selected.");
+            alert.showAndWait();
         }
     }
 
     public void handleTransferCourse(Course selectedCourse1, Course selectedCourse2) {
         if (selectedCourse1 != null && selectedCourse2 != null && student != null) {
-            // Use the Admin class to add the student to the selected course
             Admin admin = new Admin();
-            admin.transferStudentToAnotherCourse(selectedCourse1, selectedCourse2, student);
+            String result = admin.transferStudentToAnotherCourse(selectedCourse1, selectedCourse2, student);
 
-            // Reload the courses to reflect the changes in the TableView
-            loadCourses();
-            System.out.println("Student made the transfer!");
+            if (result.equals("SUCCESS")) {
+                loadCourses();
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Success");
+                alert.setHeaderText(null);
+                alert.setContentText("Student successfully transferred to the new course!");
+                alert.showAndWait();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText(result.replace("ERROR: ", ""));
+                alert.showAndWait();
+            }
         } else {
-            System.out.println("Please select courses and ensure a student is selected.");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Please select both source and target courses and ensure a student is selected.");
+            alert.showAndWait();
         }
     }
 

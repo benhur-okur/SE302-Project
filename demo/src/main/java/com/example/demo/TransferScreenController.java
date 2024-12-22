@@ -68,16 +68,14 @@ public class TransferScreenController {
         duration.setCellValueFactory(new PropertyValueFactory<>("duration"));
         lecturerName.setCellValueFactory(new PropertyValueFactory<>("lecturerName"));
 
-        // Verileri yükle
         ObservableList<Course> hypotethicalCourses = CourseDataAccessObject.getCoursesWithoutStudents();
         allCourses = AssignCourseClassroomDB.getCoursesWithAssignedClassrooms(hypotethicalCourses);
-        tableView.setItems(allCourses);
 
-        /*
-        allCourses = CourseDataAccessObject.getCoursesWithoutStudents();
-        tableView.setItems(allCourses);
+        MainScreen.makeAssign();
+        ArrayList<Course> arrayList = new ArrayList<>(MainScreen.courseList);
+        ObservableList<Course> courseObservableList = FXCollections.observableList(arrayList);
+        tableView.setItems(courseObservableList);  // allCourses yerine courseObservableList kullan
 
-         */
 
         courseTableView.setOnMouseClicked(this::handleCourseSelection);  // Course selection handler
         tableView.setOnMouseClicked(this::handleCourseSelection2);  // Course selection handler

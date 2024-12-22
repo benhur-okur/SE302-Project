@@ -17,12 +17,8 @@ public class Admin {
         classroomDAO = new ClassroomDataAccessObject();
     }
 
-    //TODO: BU METODLAR DAHA TEST EDİLMEDİ.
+    public String addStudentToCourse(Course course, Student student) {
 
-    //TODO: PARAMETREDEKİ COURSE'UN CLASSROOMU VE STUDENT'IN COURSELARI
-    public void addStudentToCourse(Course course, Student student) {
-        System.out.println("AAAAAAAAAAAAAAAAAAAA");
-        System.out.println(course.getAssignedClassroom().getClassroomName());
         if(course.getAssignedClassroom() != null){
             Classroom cls = course.getAssignedClassroom();
             if(!student.getCourses().contains(course)) {
@@ -30,71 +26,93 @@ public class Admin {
                     if(student.isAvailable(course)){
                         student.getCourses().add(course);
                         course.getEnrolledStudentsList().add(student);
-                        CourseDataAccessObject.updateForAddingStudentToCourse(course, student); // buraya ekledimmm <3
+                        CourseDataAccessObject.updateForAddingStudentToCourse(course, student);
                         AttendenceDatabase.addAttendanceSingleRow(course, student);
-                        //TODO: Yapıldı kontrol edilecek --> doa
+                        return "SUCCESS";
                     } else {
-                        System.out.println("This student have another course at that time!");
+                        return "ERROR: This student has another course at that time!";
                     }
-
                 } else {
-                    System.out.println("There is no space in the classroom.");
+                    return "ERROR: There is no space in the classroom.";
                 }
             } else {
-                System.out.println("Transfer failed: The student is already enrolled in this course");
+                return "ERROR: The student is already enrolled in this course";
             }
         }
-
-
+        return "ERROR: Course has no assigned classroom";
     }
 
-    public void removeStudentFromCourse(Course course, Student student) {
+    public String removeStudentFromCourse(Course course, Student student) {
         System.out.println(student);
         if(student.getCourses().contains(course)) {
             System.out.println("heyyyyyyyyooooooo");
-            student.getCourses().remove(course);
-            course.getEnrolledStudentsList().remove(student);
-
-            CourseDataAccessObject.updateForRemovingStudent(course, student); // buraya ekledimm
             try {
+                student.getCourses().remove(course);
+                course.getEnrolledStudentsList().remove(student);
+                CourseDataAccessObject.updateForRemovingStudent(course, student);
                 AttendenceDatabase.deleteAttendanceRecord(student, course);
+                return "SUCCESS";
             } catch (SQLException e) {
-                throw new RuntimeException(e);
+                return "ERROR: Database error occurred while removing student";
             }
-            // TODO : update işlemini yaptım fakat denenmedi !!! <3 doa
         } else {
-            System.out.println("Transfer failed: The student is not enrolled in this course.");
+            return "ERROR: The student is not enrolled in this course.";
         }
-
     }
 
-    public void transferStudentToAnotherCourse(Course enrolledCourse, Course transferCourse, Student student) {
-        //TODO  2öğrenci yeni bir kursa eklencekken zaman çizelgesi o ders için uygun mu? kontrol edilcek
-
-        if(student.getCourses().contains(enrolledCourse) && !student.getCourses().contains(transferCourse)) {
-            if(transferCourse.getAssignedClassroom().getCapacity() > transferCourse.getEnrolledStudentsList().size()) {
-                //if(student.isAvailable(enrolledCourse)){
-                    student.getCourses().add(transferCourse);
-                    student.getCourses().remove(enrolledCourse);
-                    enrolledCourse.getEnrolledStudentsList().remove(student);
-                    transferCourse.getEnrolledStudentsList().add(student);
-
-                    CourseDataAccessObject.updateForTransferringStudent(enrolledCourse, transferCourse, student); // buraya ekledimm
-                    try {
-                        AttendenceDatabase.deleteAttendanceRecord(student, enrolledCourse);
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
-                    }
-                    //TODO: bu da tamam metodu doğru yerde mi çağırıyorum bilemedim ve yine denemedim :((
-                //}
-
-            } else {
-                System.out.println("There is no space in the classroom.");
-            }
-        } else {
-            System.out.println("Transfer failed: Either the student is not enrolled in the course or already transferred.");
+    public String transferStudentToAnotherCourse(Course enrolledCourse, Course transferCourse, Student student) {
+        // 1. Önce temel kontroller
+        if (!student.getCourses().contains(enrolledCourse)) {
+            return "ERROR: Student is not enrolled in the source course";
         }
 
+        if (student.getCourses().contains(transferCourse)) {
+            return "ERROR: Student is already enrolled in the target course";
+        }
+
+        // 2. Hedef ders için sınıf kontrolü
+        if (transferCourse.getAssignedClassroom() == null) {
+            return "ERROR: Target course has no assigned classroom";
+        }
+
+        // 3. Kapasite kontrolü
+        if (transferCourse.getAssignedClassroom().getCapacity() <= transferCourse.getEnrolledStudentsList().size()) {
+            return "ERROR: There is no space in the target classroom";
+        }
+
+        // 4. ÖNEMLİ: Zaman çakışması kontrolü
+        // Öğrenciyi geçici olarak mevcut dersten çıkar ki kendi dersiyle çakışma kontrolü yapmasın
+        student.getCourses().remove(enrolledCourse);
+        boolean isTimeAvailable = student.isAvailable(transferCourse);
+        // Kontrolden sonra dersi geri ekle
+        student.getCourses().add(enrolledCourse);
+
+        if (!isTimeAvailable) {
+            return "ERROR: Student has another course at the target course time";
+        }
+
+        // 5. Tüm kontroller başarılı, transferi gerçekleştir
+        try {
+            // Önce eski dersten çıkar
+            student.getCourses().remove(enrolledCourse);
+            enrolledCourse.getEnrolledStudentsList().remove(student);
+
+            // Sonra yeni derse ekle
+            student.getCourses().add(transferCourse);
+            transferCourse.getEnrolledStudentsList().add(student);
+
+            // Database işlemleri
+            CourseDataAccessObject.updateForTransferringStudent(enrolledCourse, transferCourse, student);
+            AttendenceDatabase.deleteAttendanceRecord(student, enrolledCourse);
+            return "SUCCESS";
+        } catch (SQLException e) {
+            // Hata durumunda değişiklikleri geri al
+            student.getCourses().add(enrolledCourse);
+            enrolledCourse.getEnrolledStudentsList().add(student);
+            student.getCourses().remove(transferCourse);
+            transferCourse.getEnrolledStudentsList().remove(student);
+            return "ERROR: Database error occurred during transfer";
+        }
     }
 
 

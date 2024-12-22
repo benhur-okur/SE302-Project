@@ -48,12 +48,23 @@ public class Student extends Person{
 
 
     public boolean isAvailable(Course newCourse) {
+        // Debug çıktıları ekleyelim
+        System.out.println("\n=== isAvailable Check Started ===");
+        System.out.println("Checking availability for course: " + newCourse.getCourseID());
+        System.out.println("New course day: " + newCourse.getCourseDay());
+        System.out.println("New course time: " + newCourse.getStartTime() + " - " + newCourse.getEndTime());
+
         // Eğer öğrencinin katıldığı dersler listesi boşsa, öğrenci uygundur.
         if (this.getCourses() == null || this.getCourses().isEmpty()) {
+            System.out.println("Student has no courses, available!");
             return true;
         }
 
         for (Course existingCourse : this.getCourses()) {
+            System.out.println("\nChecking against existing course: " + existingCourse.getCourseID());
+            System.out.println("Existing course day: " + existingCourse.getCourseDay());
+            System.out.println("Existing course time: " + existingCourse.getStartTime() + " - " + existingCourse.getEndTime());
+
             LocalTime existingStartTime = existingCourse.getStartTime();
             LocalTime existingEndTime = existingCourse.getEndTime();
             String existingCourseDay = existingCourse.getCourseDay();
@@ -63,12 +74,20 @@ public class Student extends Person{
 
             // Aynı gün olup olmadığını kontrol et
             if (existingCourseDay.equals(newCourseDay)) {
+                System.out.println("Same day detected!");
                 // Zamanların çakışıp çakışmadığını kontrol et
-                if (newStartTime.isBefore(existingEndTime) && newEndTime.isAfter(existingStartTime)) {
+                boolean startConflict = newStartTime.isBefore(existingEndTime);
+                boolean endConflict = newEndTime.isAfter(existingStartTime);
+                System.out.println("Start conflict: " + startConflict);
+                System.out.println("End conflict: " + endConflict);
+
+                if (startConflict && endConflict) {
+                    System.out.println("Conflict detected! Not available.");
                     return false; // Çakışma var, öğrenci bu derse katılamaz
                 }
             }
         }
+        System.out.println("No conflicts found, student is available!");
         return true; // Çakışma yok, öğrenci derse katılabilir
     }
 
