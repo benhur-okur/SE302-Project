@@ -499,7 +499,7 @@
     <routine id="190" parent="1" name="fts5"/>
     <schema id="191" parent="1" name="main">
       <Current>1</Current>
-      <LastIntrospectionLocalTimestamp>2024-12-21.23:10:34</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2024-12-22.16:25:36</LastIntrospectionLocalTimestamp>
     </schema>
     <argument id="192" parent="16">
       <ArgumentDirection>R</ArgumentDirection>
@@ -1622,14 +1622,12 @@
       <RefTableName>Classroom</RefTableName>
     </foreign-key>
     <index id="566" parent="555" name="sqlite_autoindex_Assign_1">
-      <ColNames>course_id
-classroom_name</ColNames>
+      <ColNames>course_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <Unique>1</Unique>
     </index>
     <key id="567" parent="555">
-      <ColNames>course_id
-classroom_name</ColNames>
+      <ColNames>course_id</ColNames>
       <UnderlyingIndexName>sqlite_autoindex_Assign_1</UnderlyingIndexName>
     </key>
     <column id="568" parent="556" name="attendance_id">

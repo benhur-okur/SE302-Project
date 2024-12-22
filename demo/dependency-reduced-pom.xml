@@ -23,7 +23,7 @@
           <execution>
             <id>default-cli</id>
             <configuration>
-              <mainClass>com.example.demo/com.example.demo.HelloApplication</mainClass>
+              <mainClass>com.example.demo/com.example.demo.MainScreen</mainClass>
               <launcher>app</launcher>
               <jlinkZipName>app</jlinkZipName>
               <jlinkImageName>app</jlinkImageName>
@@ -45,7 +45,7 @@
               <shadedArtifactAttached>true</shadedArtifactAttached>
               <transformers>
                 <transformer>
-                  <mainClass>com.example.demo.MainScreen</mainClass>
+                  <mainClass>com.example.demo.RunMain</mainClass>
                 </transformer>
               </transformers>
             </configuration>
