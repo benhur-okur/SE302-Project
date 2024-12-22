@@ -29,29 +29,31 @@ Attendance Management: Users can increment the absence count for courses of a sp
 Search and Refresh: Quickly refresh schedules and search for specific data.
 
 ## User Interface
-
-1. **Course Management Panel
+## Course Management Panel
 ![image](https://github.com/user-attachments/assets/c981adec-e8ab-44cf-ae10-dd1d870632b9)
 ![image](https://github.com/user-attachments/assets/bf692e16-d8f4-4619-8d1a-0a24ae0175aa)
 
-2. **Student Management Panel
+
+## Student Management Panel
 ![image](https://github.com/user-attachments/assets/15d94a4f-8fe0-482b-90e3-6d9f0a788d28)
 
-3. **Lecturer Panel
+
+## Lecturer Panel
 ![image](https://github.com/user-attachments/assets/08d4e54c-b4c8-47c7-bb8b-5a2c5c61d81c)
 
-4. **Classroom Panel
+
+## Classroom Panel
 ![image](https://github.com/user-attachments/assets/354261dd-06dc-4e0d-ae10-8d91cfa903c2)
 
-5. **Attendance Panel
+
+## Attendance Panel
 ![image](https://github.com/user-attachments/assets/3315c580-558c-4ea9-819a-a587c4fc1db1)
 
 ## File Structure
 Database: The system stores data in an SQLite database file located in the user's Documents folder.
 CSV Support: The application supports importing classroom and course data from CSV files.
 
-[Uploading Courses.csv…]()
-[Uploading ClassroomCapacity.csv…]()
+
 
 ## Project Management
 
